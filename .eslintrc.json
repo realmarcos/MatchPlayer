@@ -1,27 +1,30 @@
 {
     "env": {
         "browser": true,
-        "es2021": true
+        "es2021": true,
+        "react-native/react-native": true
     },
     "extends": [
         "plugin:react/recommended",
         "airbnb",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended"
+        "airbnb/hooks",
+        "prettier",
+        "prettier/react"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": 12,
+        "ecmaVersion": "latest",
         "sourceType": "module"
     },
     "plugins": [
         "react",
         "@typescript-eslint",
-        "react-hooks",
-        "prettier"
+        "react-native"
     ],
-    "rules": {}
+    "rules": {
+        "prettier/prettier": "error"
+    }
 }
