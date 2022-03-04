@@ -9,6 +9,8 @@ const ButtonPrtimary = ({ ...rest }) => {
     input: {
       width: "100%",
       margin: 5,
+      marginBottom: 5,
+      marginTop: 5
     }
   });
 
@@ -17,8 +19,9 @@ const ButtonPrtimary = ({ ...rest }) => {
       <TextInput
         {...rest}
         style={styles.input}
+        dense
         autoComplete={false}
-        theme={{ roundness: 10 }}
+        theme={{ roundness: 5 }}
         value={text}
         onChangeText={text => setText(text)} />
     </>
