@@ -1,9 +1,8 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import Input from "../../components/Input";
 import ButtonPrtimary from "../../components/Buttons/ButtonPrimary";
-import ButtonSecondary from "../../components/Buttons/ButtonSecondary";
-import { Checkbox, TextInput, useTheme } from "react-native-paper";
+import { Button, Checkbox, TextInput, useTheme } from "react-native-paper";
 
 const Login = ({ navigation }: any) => {
   const { colors } = useTheme();
@@ -24,11 +23,22 @@ const Login = ({ navigation }: any) => {
       width: "100%",
       flexDirection: "row",
       flexWrap: "wrap",
+    },
+    logo: {
+      marginBottom: 80,
+      width: 128,
+      height: 128,
     }
   })
 
   return (
     <View style={styles.container}>
+      <View style={{ alignItems: 'center' }}>
+        <Image
+          style={styles.logo}
+          source={require('../../assets/logo-main.png')}
+        />
+      </View>
 
       {/* Forms  */}
       <View>
@@ -69,9 +79,16 @@ const Login = ({ navigation }: any) => {
       </View>
 
       <ButtonPrtimary onPress={() => navigation.navigate('Login')}>Cadastrar</ButtonPrtimary>
-      <ButtonSecondary onPress={() => navigation.navigate('Login')}>Go to Login</ButtonSecondary>
-      
-      <Text style={{ color: colors.primary, fontSize: 16 }} >Você já tem cadastro ? </Text>
+      {/* <ButtonSecondary onPress={() => navigation.navigate('Login')}>Go to Login</ButtonSecondary> */}
+
+      <View style={{ flexDirection: "row", flexWrap: "wrap", margin: 5 }}>
+        <Text
+          style={{ color: colors.primary, fontSize: 16, paddingTop: 6 }} >
+          Você já possui cadastro ?
+        </Text>
+        <Button mode="text" onPress={() => navigation.navigate('Login')}>Entrar</Button>
+
+      </View>
     </View>
   );
 }
