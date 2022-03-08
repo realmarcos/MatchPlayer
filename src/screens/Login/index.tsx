@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import Input from "../../components/Input";
-import ButtonPrtimary from "../../components/Buttons/ButtonPrimary";
+import { ButtonPrimary } from "../../components/Buttons";
 import { Button, TextInput, useTheme } from "react-native-paper";
 
 const Login = ({ navigation }: any) => {
@@ -44,7 +44,7 @@ const Login = ({ navigation }: any) => {
       </View>
 
 
-      <ButtonPrtimary onPress={() => navigation.navigate('Login')}>Entrar</ButtonPrtimary>
+      <ButtonPrimary onPress={() => navigation.navigate('LoggedOnRoutes')}>Entrar</ButtonPrimary>
       {/* <ButtonSecondary onPress={() => navigation.navigate('Login')}>Go to Login</ButtonSecondary> */}
 
       <View style={{ flexDirection: "row", flexWrap: "wrap", margin: 5 }}>
