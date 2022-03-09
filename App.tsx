@@ -24,7 +24,7 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <StatusBar style="light" translucent backgroundColor="transparent" />
+        <StatusBar translucent backgroundColor="transparent" />
         <Routes />
       </NavigationContainer>
     </PaperProvider>
