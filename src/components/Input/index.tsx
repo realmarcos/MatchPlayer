@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
-const ButtonPrtimary = ({ ...rest }) => {
+const Input = ({ ...rest }) => {
   const [text, setText] = React.useState("");
 
   const styles = StyleSheet.create({
@@ -27,5 +27,4 @@ const ButtonPrtimary = ({ ...rest }) => {
     </>
   )
 }
-
-export default ButtonPrtimary
+export default Input;

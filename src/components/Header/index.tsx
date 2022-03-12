@@ -1,14 +1,14 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { Appbar, useTheme } from 'react-native-paper'
+import { Appbar, IconButton, useTheme } from 'react-native-paper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 interface Header {
-  title: string;
-  children?: any
+  title?: string;
+  children?: any;
 }
 
-const Header = (props: Header) => {
+const Header = (props: Header, { navigation }: any) => {
   const { colors } = useTheme();
   const statusBarHeight = getStatusBarHeight();
   const styles = StyleSheet.create({
@@ -24,13 +24,13 @@ const Header = (props: Header) => {
       color: colors.primary,
       fontSize: 20,
       fontWeight: 'bold',
-      marginLeft: 25
+      // marginLeft: 25
     }
   })
   return (
-    <Appbar style={styles.header} >
-      <Text style={styles.title}>{props.title}</Text>
+    <Appbar style={styles.header}>
       {props.children}
+      <Text style={styles.title}>{props.title}</Text>
     </Appbar >
   )
 }
