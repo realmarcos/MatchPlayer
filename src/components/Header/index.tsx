@@ -24,7 +24,7 @@ const Header = (props: Header, { navigation }: any) => {
       color: colors.primary,
       fontSize: 20,
       fontWeight: 'bold',
-      // marginLeft: 25
+      marginLeft: 25
     }
   })
   return (

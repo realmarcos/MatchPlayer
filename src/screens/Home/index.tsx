@@ -1,8 +1,8 @@
 import React from "react";
-import { Button, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import Header from "../../components/Header";
-import { Avatar, Card, IconButton, Menu, Paragraph, Searchbar, TextInput, Title, useTheme } from "react-native-paper";
-import { ButtonPrimary, ButtonSecondary } from "../../components/Buttons";
+import { Avatar, Card, Paragraph, Searchbar, useTheme, Text } from "react-native-paper";
+import { ButtonPrimary, ButtonSecondary, ButtonCards } from "../../components/Buttons";
 import { styles } from "../../theme/styles";
 import ItensHeader from "../../components/ItensHeader";
 
@@ -11,7 +11,6 @@ import ItensHeader from "../../components/ItensHeader";
 const Home = ({ navigation }: any) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const { colors } = useTheme();
-
   const onChangeSearch = (query: any) => setSearchQuery(query);
 
 
@@ -24,46 +23,38 @@ const Home = ({ navigation }: any) => {
         <View style={styles.container}>
           <View>
             <Searchbar
-              autoComplete={false}
+              autoComplete={"off"}
               placeholder="Pesquisar"
               onChangeText={onChangeSearch}
               value={searchQuery}
               theme={{ colors: { text: colors.placeholder } }}
-              style={{
-                backgroundColor: 'white',
-                borderWidth: 1,
-                borderColor: colors.placeholder,
-                marginBottom: 10,
-              }}
+              style={styles.search}
             />
             <ButtonPrimary onPress={() => navigation.navigate('addMatches')}>criar partida</ButtonPrimary>
-            <ButtonSecondary onPress={() => navigation.navigate('addMatches')}>Minhas partidas</ButtonSecondary>
+            <ButtonSecondary onPress={() => navigation.navigate('MyMatches')}>Minhas partidas</ButtonSecondary>
           </View>
           <View>
-
-            <Card style={{ borderRadius: 10, marginTop: 10 }}>
-              <Paragraph style={{ color: 'white' }}>
-                {/* <Button icon="camera"> */}
+            <Card style={styles.cards}>
+              <Paragraph>
                 Futebol
-                {/* </Button> */}
               </Paragraph>
-              <Card.Title title="Pelada no parque das aguas" titleStyle={{ color: 'white' }} />
+              <Card.Title title="Pelada no parque das aguas" />
               <Card.Content >
-                <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+                <View style={styles.cardContentAvatar}>
                   <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={20} source={require('../../assets/avatar.png')} />
                   <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={20} source={require('../../assets/avatar.png')} />
                   <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={20} source={require('../../assets/avatar.png')} />
                 </View>
                 <View>
-                  <Text style={{ color: 'white' }}>Participantes: 3/10</Text>
-                  <Text style={{ color: 'white' }}>19:00 até 20:00 </Text>
-                  <Text style={{ color: 'white' }}>14 de Fevereico de 2022</Text>
-                  <Text style={{ color: 'white' }}>Rua amâncio, Setor oeste</Text>
+                  <Text>Participantes: 3/10</Text>
+                  <Text>19:00 até 20:00 </Text>
+                  <Text>14 de Fevereico de 2022</Text>
+                  <Text>Rua amâncio, Setor oeste</Text>
 
                 </View>
               </Card.Content>
-              <Card.Actions>
-                <ButtonSecondary>participar</ButtonSecondary>
+              <Card.Actions style={styles.cardsActions}>
+                <ButtonCards>participar</ButtonCards>
               </Card.Actions>
             </Card>
             <Card style={{ borderRadius: 10, marginTop: 10 }}>
@@ -74,21 +65,21 @@ const Home = ({ navigation }: any) => {
               </Paragraph>
               <Card.Title title="Pelada no parque das aguas" titleStyle={{ color: 'white' }} />
               <Card.Content >
-                <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+                <View style={styles.cardContentAvatar}>
                   <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={20} source={require('../../assets/avatar.png')} />
                   <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={20} source={require('../../assets/avatar.png')} />
                   <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={20} source={require('../../assets/avatar.png')} />
                 </View>
                 <View>
-                  <Text style={{ color: 'white' }}>Participantes: 3/10</Text>
-                  <Text style={{ color: 'white' }}>19:00 até 20:00 </Text>
-                  <Text style={{ color: 'white' }}>14 de Fevereico de 2022</Text>
-                  <Text style={{ color: 'white' }}>Rua amâncio, Setor oeste</Text>
+                  <Text>Participantes: 3/10</Text>
+                  <Text>19:00 até 20:00 </Text>
+                  <Text>14 de Fevereico de 2022</Text>
+                  <Text>Rua amâncio, Setor oeste</Text>
 
                 </View>
               </Card.Content>
-              <Card.Actions>
-                <ButtonSecondary>participar</ButtonSecondary>
+              <Card.Actions style={styles.cardsActions}>
+                <ButtonCards>participar</ButtonCards>
               </Card.Actions>
             </Card>
           </View>

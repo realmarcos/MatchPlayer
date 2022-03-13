@@ -4,7 +4,9 @@ import { Button, useTheme } from 'react-native-paper';
 const styles = StyleSheet.create({
   btnPrimary: {
     width: "100%",
-    margin: 5,
+    marginTop: 5,
+    marginBottom: 5,
+    borderRadius: 50
   }
 });
 
@@ -28,9 +30,11 @@ const ButtonSecondary = ({ ...rest }) => {
   const styles = StyleSheet.create({
     btnSecondary: {
       width: "100%",
-      margin: 5,
+      marginTop: 5,
+      marginBottom: 5,
       borderWidth: 1,
-      borderColor: colors.primary
+      borderColor: colors.primary,
+      borderRadius: 50
     }
   })
 
@@ -44,6 +48,28 @@ const ButtonSecondary = ({ ...rest }) => {
     </Button>
   )
 }
+/**Button cards -  react-native-paper*/
+const ButtonCards = ({ ...rest }) => {
+  const { colors } = useTheme();
+  const styles = StyleSheet.create({
+    btnSecondary: {
+      width: "100%",
+      margin: 5,
+      borderWidth: 1,
+      borderColor: colors.primary,
+      borderRadius: 50
+    }
+  })
+
+  return (
+    <Button
+      {...rest}
+      style={styles.btnSecondary}
+      mode="outlined"
+    >
+    </Button>
+  )
+}
 
 
-export { ButtonPrimary, ButtonSecondary }
+export { ButtonPrimary, ButtonSecondary, ButtonCards }
