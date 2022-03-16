@@ -26,7 +26,7 @@ const ItensHeader = (props: any) => {
         icon="bell"
         size={32}
         color={colors.primary}
-        onPress={() => console.log('Pressed')}
+        onPress={() => props.nav.navigate('Notifications')}
       />
       <Menu
         visible={visible}
@@ -46,6 +46,7 @@ const ItensHeader = (props: any) => {
         }
       >
         <Menu.Item onPress={() => { props.nav.navigate('profile') }} title="Perfil" />
+        <Menu.Item onPress={() => { console.log('logout') }} title="Sair" />
       </Menu>
     </View>
   )

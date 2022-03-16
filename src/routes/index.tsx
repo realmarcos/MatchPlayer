@@ -15,7 +15,8 @@ import LoggedOnRoutesTabs from "./loggedOnTabs.routes";
 const Routes = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="LoggedOnRoutes" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      initialRouteName="LoggedOnRoutes" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="LoggedOnRoutes" component={LoggedOnRoutesTabs} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />

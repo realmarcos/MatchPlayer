@@ -1,7 +1,7 @@
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Avatar, Card, IconButton, Paragraph, Searchbar, useTheme, Text } from "react-native-paper";
-import { ButtonCards, ButtonPrimary, ButtonSecondary } from "../../../components/Buttons";
+import { ButtonCards, ButtonPrimary } from "../../../components/Buttons";
 import Header from "../../../components/Header";
 import ItensHeader from "../../../components/ItensHeader";
 import { styles } from "../../../theme/styles";
