@@ -1,6 +1,6 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { Appbar, IconButton, useTheme } from 'react-native-paper'
+import { StyleSheet } from 'react-native'
+import { Appbar, Text, useTheme } from 'react-native-paper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 interface Header {
@@ -9,7 +9,7 @@ interface Header {
 }
 
 const Header = (props: Header, { navigation }: any) => {
-  const { colors } = useTheme();
+  const { colors, fonts } = useTheme();
   const statusBarHeight = getStatusBarHeight();
   const styles = StyleSheet.create({
     header: {

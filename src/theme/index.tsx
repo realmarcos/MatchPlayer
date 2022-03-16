@@ -1,4 +1,4 @@
-import { DefaultTheme } from 'react-native-paper'
+import { configureFonts, DefaultTheme } from 'react-native-paper';
 
 const theme = {
     ...DefaultTheme,
@@ -14,7 +14,8 @@ const theme = {
         placeholder: '#707070',
         backdrop: "#F26A4B",
         onSurface: '#F28322',
-        notification: '#F28322',        
+        notification: '#F28322',
     },
+    // fonts: configureFonts(fontConfig),
 }
 export default theme

@@ -1,9 +1,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Colors, TextInput, useTheme } from 'react-native-paper';
+import { TextInput, useTheme } from 'react-native-paper';
 
 const Input = ({ ...rest }) => {
-  // const [text, setText] = React.useState("");
   const { colors } = useTheme();
 
   const styles = StyleSheet.create({
@@ -23,8 +22,6 @@ const Input = ({ ...rest }) => {
         dense
         autoComplete={"off"}
         theme={{ roundness: 5, colors: {text: colors.surface} }}
-        // value={text}
-        // onChangeText={text => setText(text)} 
         />
     </>
   )

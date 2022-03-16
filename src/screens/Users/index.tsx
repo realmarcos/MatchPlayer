@@ -1,55 +1,82 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Avatar, IconButton, useTheme } from "react-native-paper";
+import { ScrollView, View } from "react-native";
+import { Avatar, Card, Searchbar, Text, Title, useTheme } from "react-native-paper";
+import { ButtonCards } from "../../components/Buttons";
 import Header from "../../components/Header";
+import ItensHeader from "../../components/ItensHeader";
+import { styles } from "../../theme/styles";
 
 /**Screen Users or Athletes */
 const Users = ({ navigation }: any) => {
   const { colors } = useTheme();
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 25,
-      backgroundColor: "#FFFFFF",
-      // alignItems: 'center',  
-      justifyContent: 'center',
-    },
-    icone: {
-      position: "absolute",
-      right: 0,
-      marginRight: 25,
-      marginLeft: 5
-    },
-    itensHeader: {
-      position: "absolute",
-      right: 0,
-      margin: 25,
-      flexDirection: "row",
-      flexWrap: "wrap",
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const onChangeSearch = (query: any) => setSearchQuery(query);
 
+  const listCards = () => {
+    const cards = [];
+    for (let i = 0; i < 10; i++) {
+      cards.push(
+        <Card style={styles.cards}>
+          <Card.Content>
+            <View style={styles.cardContentAvatar}>
+              <Avatar.Image size={64} source={require('../../assets/avatar.png')} />
+              <View style={{ margin: 5, marginLeft: 10 }}>
+                <Title>
+                  João da Silva
+                </Title>
+                <Text>Esporte favorito: Futebol </Text>
+              </View>
+            </View>
+          </Card.Content>
+
+          <Card.Actions style={styles.cardsActions}>
+            <ButtonCards>adicionar amigo</ButtonCards>
+          </Card.Actions>
+        </Card>
+      )
     }
-  })
+    return cards;
+  };
 
   return (
     <>
-      <Header title="MathPlayer">
-        <View style={styles.itensHeader}>
-          <IconButton
-            icon="bell"
-            size={32}
-            color={colors.primary}
-            onPress={() => console.log('Pressed')}
-          />
-          <Avatar.Image
-            size={38}
-            style={{ marginTop: 10 }}
-            source={require('../../assets/avatar.png')}
-          />
-        </View>
+      <Header title="MathPlayer - Atletas">
+        <ItensHeader nav={navigation} />
       </Header>
-      <View style={styles.container}>
-        <Text>Usuários</Text>
-      </View>
+      <ScrollView>
+        <View style={styles.container}>
+          <View>
+            <Searchbar
+              autoComplete={"off"}
+              placeholder="Pesquisar"
+              onChangeText={onChangeSearch}
+              value={searchQuery}
+              theme={{ colors: { text: colors.placeholder } }}
+              style={styles.search}
+            />
+          </View>
+          <View>
+            <Card style={styles.cards}>
+              <Card.Content>
+                <View style={styles.cardContentAvatar}>
+                  <Avatar.Image size={64} source={require('../../assets/avatar.png')} />
+                  <View style={{ margin: 5, marginLeft: 10 }}>
+                    <Title>
+                      João da Silva
+                    </Title>
+                    <Text>Esporte favorito: Futebol </Text>
+                  </View>
+                </View>
+              </Card.Content>
+
+              <Card.Actions style={styles.cardsActions}>
+                <ButtonCards>adicionar amigo</ButtonCards>
+              </Card.Actions>
+            </Card>
+            {listCards()}
+          </View>
+        </View>
+      </ScrollView>
     </>
   );
 }
