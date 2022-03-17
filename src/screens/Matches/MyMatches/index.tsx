@@ -46,9 +46,9 @@ const MyMatches = ({ navigation }: any) => {
               <Card.Title title="Pelada no parque das aguas" />
               <Card.Content >
                 <View style={styles.cardContentAvatar}>
-                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={20} source={require('../../../assets/avatar.png')} />
-                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={20} source={require('../../../assets/avatar.png')} />
-                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={20} source={require('../../../assets/avatar.png')} />
+                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require('../../../assets/avatar.png')} />
+                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require('../../../assets/avatar.png')} />
+                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require('../../../assets/avatar.png')} />
                 </View>
                 <View>
                   <Text>Participantes: 3/10</Text>
@@ -71,9 +71,9 @@ const MyMatches = ({ navigation }: any) => {
               <Card.Title title="Pelada no parque das aguas" titleStyle={{ color: 'white' }} />
               <Card.Content >
                 <View style={styles.cardContentAvatar}>
-                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={20} source={require('../../../assets/avatar.png')} />
-                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={20} source={require('../../../assets/avatar.png')} />
-                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={20} source={require('../../../assets/avatar.png')} />
+                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require('../../../assets/avatar.png')} />
+                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require('../../../assets/avatar.png')} />
+                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require('../../../assets/avatar.png')} />
                 </View>
                 <View>
                   <Text>Participantes: 3/10</Text>

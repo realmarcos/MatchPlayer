@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   cardContentAvatar: {
     flexDirection: "row",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
   },
   cardsActions: {
     paddingLeft: 10,

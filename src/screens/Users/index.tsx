@@ -16,7 +16,7 @@ const Users = ({ navigation }: any) => {
     const cards = [];
     for (let i = 0; i < 10; i++) {
       cards.push(
-        <Card style={styles.cards}>
+        <Card style={styles.cards} key={i}>
           <Card.Content>
             <View style={styles.cardContentAvatar}>
               <Avatar.Image size={64} source={require('../../assets/avatar.png')} />
