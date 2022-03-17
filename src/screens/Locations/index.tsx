@@ -1,56 +1,90 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import Header from "../../components/Header";
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import { Avatar, IconButton, useTheme } from "react-native-paper";
+import { Card, Paragraph, Searchbar, useTheme, Text } from "react-native-paper";
+import ItensHeader from "../../components/ItensHeader";
+import { styles } from "../../theme/styles";
+import { ButtonCards, ButtonPrimary, ButtonSecondary } from "../../components/Buttons";
 
 /**Screen Locations */
 const Locations = ({ navigation }: any) => {
+  const [searchQuery, setSearchQuery] = React.useState('');
   const { colors } = useTheme();
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 25,
-      backgroundColor: "#FFFFFF",
-      // alignItems: 'center',  
-      justifyContent: 'center',
-    },
-    icone: {
-      position: "absolute",
-      right: 0,
-      marginRight: 25,
-      marginLeft: 5
-    },
-    itensHeader: {
-      position: "absolute",
-      right: 0,
-      margin: 25,
-      flexDirection: "row",
-      flexWrap: "wrap",
-
-    }
-  })
+  const onChangeSearch = (query: any) => setSearchQuery(query);
 
   return (
     <>
-      <Header title="MathPlayer">
-        <View style={styles.itensHeader}>
-          <IconButton
-            icon="bell"
-            size={32}
-            color={colors.primary}
-            onPress={() => console.log('Pressed')}
-          />
-          <Avatar.Image
-            size={38}
-            style={{ marginTop: 10 }}
-            source={require('../../assets/avatar.png')}
-          />
-        </View>
+      <Header title="MathPlayer - Locais">
+        <ItensHeader nav={navigation} />
       </Header>
-      <View style={styles.container}>
-        <Text>Locais</Text>
-      </View>
+      <ScrollView>
+        <View style={styles.container}>
+          <View>
+            <Searchbar
+              autoComplete={"off"}
+              placeholder="Pesquisar"
+              onChangeText={onChangeSearch}
+              value={searchQuery}
+              theme={{ colors: { text: colors.placeholder } }}
+              style={styles.search}
+            />
+            <ButtonPrimary onPress={() => navigation.navigate('addLocations')}>adicionar local</ButtonPrimary>
+            <ButtonSecondary onPress={() => navigation.navigate('MyMatches')}>meus locais</ButtonSecondary>
+          </View>
+          <View>
+            <Card style={styles.cards}>
+              <Paragraph>
+                Futebol
+              </Paragraph>
+              <Card.Title title="Campo Parque das águas" />
+              <Card.Content>
+                <View>
+                  <Text>Aberto de seg a dom das 12:00 até 23:00</Text>
+                  <Text>Rua dos bois, Parque das Àguas </Text>
+                </View>
+              </Card.Content>
+              <Card.Actions style={styles.cardsActions}>
+                <ButtonCards>criar partida</ButtonCards>
+              </Card.Actions>
+            </Card>
+            <Card style={styles.cards}>
+              <Paragraph>
+                Futebol/Vôlei
+              </Paragraph>
+              <Card.Title title="Escola Amâncio" />
+              <Card.Content>
+                <View>
+                  <Text>Aberto de seg a dom das 12:00 até 23:00</Text>
+                  <Text>Rua amâncio, Setor oeste</Text>
+                </View>
+              </Card.Content>
+              <Card.Actions style={styles.cardsActions2}>
+                <ButtonCards>validar</ButtonCards>
+                <ButtonCards>criar partida</ButtonCards>
+              </Card.Actions>
+            </Card>
+            <Card style={styles.cards}>
+              <Paragraph>
+                Futebol
+              </Paragraph>
+              <Card.Title title="Campo do Centro" />
+              <Card.Content >
+                <View style={styles.cardContentAvatar}>
+                  <Text theme={{ colors: { text: colors.primary } }}>Não validado</Text>
+                </View>
+                <View>
+                  <Text>Aberto de seg a dom das 12:00 até 23:00</Text>
+                  <Text>Rua amâncio, Setor oeste</Text>
+                </View>
+              </Card.Content>
+              <Card.Actions style={styles.cardsActions2}>
+                <ButtonCards>validar</ButtonCards>
+                <ButtonCards>criar partida</ButtonCards>
+              </Card.Actions>
+            </Card>
+          </View>
+        </View>
+      </ScrollView>
     </>
   );
 }
