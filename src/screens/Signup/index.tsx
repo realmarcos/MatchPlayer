@@ -29,7 +29,7 @@ const Login = ({ navigation }: any) => {
       width: 128,
       height: 128,
     }
-  })
+  });
 
   return (
     <View style={styles.container}>
