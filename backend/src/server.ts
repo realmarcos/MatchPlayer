@@ -1,7 +1,7 @@
-import express from 'express';
-import "./dotenv";
-const app = express();
+import "./bootstrap";
+import app from './app'
+import { logger } from "./utils/logger";
 
-const server = app.listen(process.env.PORT, () => {
-  console.log(`Server started on port: ${process.env.PORT}`);
+app.listen(process.env.PORT, () => {
+  logger.info(`Server started on port: ${process.env.PORT}`);
 });
