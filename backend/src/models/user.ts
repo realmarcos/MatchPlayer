@@ -7,9 +7,9 @@ import {
   CreatedAt,
   UpdatedAt,
   AllowNull,
-  Unique
-} from 'sequelize-typescript';
-import { Optional } from 'sequelize';
+  Unique,
+} from "sequelize-typescript";
+import { Optional } from "sequelize";
 
 interface userAttributes {
   id: number;
@@ -22,46 +22,45 @@ interface userAttributes {
   createdAt?: Date;
   updatedAt?: Date;
 }
-interface userCreationAttributes extends Optional<userAttributes, 'id'> {}
+interface userCreationAttributes extends Optional<userAttributes, "id"> {}
 
 @Table
 class User extends Model<userAttributes, userCreationAttributes> {
-
   @PrimaryKey
   @AutoIncrement
   @Column
-  id: number;
+    id: number;
 
   @AllowNull(false)
   @Column
-  name: string
-
-  @AllowNull(false)
-  @Unique
-  @Column
-  username: string
+    name: string;
 
   @AllowNull(false)
   @Unique
   @Column
-  email: string
+    username: string;
+
+  @AllowNull(false)
+  @Unique
+  @Column
+    email: string;
 
   @Unique
   @Column
-  phone: string
+    phone: string;
 
   @AllowNull(false)
   @Column
-  password: string
+    password: string;
 
   @Column
-  picture: string
+    picture: string;
 
   @CreatedAt
-  createdAt: Date;
+    createdAt: Date;
 
   @UpdatedAt
-  updatedAt: Date;
+    updatedAt: Date;
 }
 
 export default User;

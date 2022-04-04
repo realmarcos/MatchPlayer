@@ -22,48 +22,30 @@ export const signup = async (req: Request, res: Response) => {
     return res.status(409).json({ message: `${phone} already exists` });
   }
 
-  res.send("ok");
-  // check if email already exists
-  // User.findOne({
-  //   where: {
-  //     email: req.body.email,
-  //     username: req.body.username,
-  //   }
-  // })
-  //   .then(dbUser => {
-  //     if (dbUser) {
-  //       return res.status(409).json({ message: "user already exists" });
-  //     } else if (req.body.email && req.body.password) {
-  //       // password hash
-  //       bcrypt.hash(req.body.password, 12, (err, passwordHash) => {
-  //         if (err) {
-  //           return res.status(500).json({ message: "couldnt hash the password" });
-  //         } else if (passwordHash) {
-  //           return User.create({
-  //             name: req.body.name,
-  //             username: req.body.username,
-  //             email: req.body.email,
-  //             phone: req.body.phone,
-  //             password: passwordHash
-  //           })
-  //             .then(() => {
-  //               res.status(200).json({ message: "user created" });
-  //             })
-  //             .catch(err => {
-  //               logger.error(err);
-  //               res.status(502).json({ message: "error while creating the user" });
-  //             });
-  //         };
-  //       });
-  //     } else if (!req.body.password) {
-  //       return res.status(400).json({ message: "password not provided" });
-  //     } else if (!req.body.email) {
-  //       return res.status(400).json({ message: "email not provided" });
-  //     };
-  //   })
-  //   .catch(err => {
-  //     logger.error(err);
-  //   });
+  if (username && email && password) {
+    bcrypt.hash(password, 12, (err, passwordHash) => {
+      if (err) {
+        return res.status(500).json({ message: "couldnt hash the password" });
+      } if (passwordHash) {
+        return User.create(({
+          name,
+          username,
+          email,
+          phone,
+          password: passwordHash,
+        }))
+          .then(() => {
+            res.status(200).json({ message: "user created" });
+          })
+          .catch((err) => {
+            logger.error(err);
+            res.status(502).json({ message: "error while creating the user" });
+          });
+      }
+    });
+  } else if (!username || !email || !password) {
+    return res.status(400).json({ message: "error: username or password null" });
+  }
 };
 export const sigin = async (req: Request, res: Response) => {
   // checks if email exists
@@ -88,12 +70,13 @@ export const sigin = async (req: Request, res: Response) => {
         }
       });
     })
-    .catch((err) => {
-      console.log("error", err);
+    .catch((err: any) => {
+      logger.error(err);
     });
 };
 export const isAuth = async (req: Request, res: Response) => {
   const authHeader = req.get("Authorization");
+  console.log(authHeader);
   if (!authHeader) {
     return res.status(401).json({ message: "not authenticated" });
   }
