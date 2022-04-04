@@ -3,11 +3,9 @@ import pino from "pino";
 
 const logger = pino({
   prettyPrint: {
-    ignore: "pid,hostname"
+    ignore: "pid,hostname",
   },
-  timestamp: () => {
-    return `,"time":"${format(parseISO(new Date(Date.now()).toISOString()), "dd/MM/yyyy - HH:mm:ss")}"`
-  }
+  timestamp: () => `,"time":"${format(parseISO(new Date(Date.now()).toISOString()), "dd/MM/yyyy - HH:mm:ss")}"`,
 });
 
-export { logger };
+export default logger;

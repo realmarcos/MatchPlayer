@@ -8,12 +8,24 @@ import {
   UpdatedAt,
   AllowNull,
   Unique
-} from 'sequelize-typescript'
+} from 'sequelize-typescript';
+import { Optional } from 'sequelize';
 
-@Table({
-  timestamps: true,
-})
-class User extends Model<User> {
+interface userAttributes {
+  id: number;
+  name: string,
+  username: string,
+  email: string,
+  phone: string,
+  password: string,
+  picture?: string,
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+interface userCreationAttributes extends Optional<userAttributes, 'id'> {}
+
+@Table
+class User extends Model<userAttributes, userCreationAttributes> {
 
   @PrimaryKey
   @AutoIncrement
@@ -38,8 +50,12 @@ class User extends Model<User> {
   @Column
   phone: string
 
+  @AllowNull(false)
   @Column
-  picture: Blob
+  password: string
+
+  @Column
+  picture: string
 
   @CreatedAt
   createdAt: Date;
