@@ -1,14 +1,17 @@
-import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Avatar, IconButton, Menu, useTheme } from 'react-native-paper';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import React, { useContext } from "react";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Avatar, IconButton, Menu, useTheme,
+} from "react-native-paper";
+import { getStatusBarHeight } from "react-native-status-bar-height";
+import { AuthContext } from "../../context/Auth";
 
-const ItensHeader = (props: any) => {
+function ItensHeader(props: any) {
   const { colors } = useTheme();
   const [visible, setVisible] = React.useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
-
+  const { handleLogout } = useContext(AuthContext);
 
   const stylesLocal = StyleSheet.create({
     itensHeader: {
@@ -18,38 +21,36 @@ const ItensHeader = (props: any) => {
       flexDirection: "row",
       flexWrap: "wrap",
 
-    }
-  })
+    },
+  });
   return (
     <View style={stylesLocal.itensHeader}>
       <IconButton
         icon="bell"
         size={32}
         color={colors.primary}
-        onPress={() => props.nav.navigate('Notifications')}
+        onPress={() => props.nav.navigate("Notifications")}
       />
       <Menu
         visible={visible}
         onDismiss={closeMenu}
         style={{ marginTop: getStatusBarHeight() }}
-        anchor={
-          <>
-            <TouchableOpacity onPress={openMenu}>
-              <Avatar.Image
-                size={38}
-                style={{ marginTop: 10 }}
-                source={require('../../assets/avatar.png')}
-              />
+        anchor={(
+          <TouchableOpacity onPress={openMenu}>
+            <Avatar.Image
+              size={38}
+              style={{ marginTop: 10 }}
+              source={require("../../assets/avatar.png")}
+            />
 
-            </TouchableOpacity >
-          </>
-        }
+          </TouchableOpacity>
+        )}
       >
-        <Menu.Item onPress={() => { props.nav.navigate('profile') }} title="Perfil" />
-        <Menu.Item onPress={() => { console.log('logout') }} title="Sair" />
+        <Menu.Item onPress={() => { props.nav.navigate("profile"); }} title="Perfil" />
+        <Menu.Item onPress={handleLogout} title="Sair" />
       </Menu>
     </View>
-  )
+  );
 }
 
 export default ItensHeader;

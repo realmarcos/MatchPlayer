@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ScrollView, View } from "react-native";
+import {
+  Avatar, Card, Paragraph, Searchbar, useTheme, Text, Button,
+} from "react-native-paper";
 import Header from "../../components/Header";
-import { Avatar, Card, Paragraph, Searchbar, useTheme, Text, Button } from "react-native-paper";
 import { ButtonPrimary, ButtonSecondary, ButtonCards } from "../../components/Buttons";
 import { styles } from "../../theme/styles";
 import ItensHeader from "../../components/ItensHeader";
+import { AuthContext } from "../../context/Auth";
 
-
-/**Screen Home or Matches */
-const Home = ({ navigation }: any) => {
-  const [searchQuery, setSearchQuery] = React.useState('');
+/** Screen Home or Matches */
+function Home({ navigation }: any) {
+  const [searchQuery, setSearchQuery] = React.useState("");
   const { colors } = useTheme();
   const onChangeSearch = (query: any) => setSearchQuery(query);
-
+  // eslint-disable-next-line no-unused-vars
+  const { user } = useContext(AuthContext);
 
   return (
     <>
@@ -23,15 +26,15 @@ const Home = ({ navigation }: any) => {
         <View style={styles.container}>
           <View>
             <Searchbar
-              autoComplete={"off"}
+              autoComplete="off"
               placeholder="Pesquisar"
               onChangeText={onChangeSearch}
               value={searchQuery}
               theme={{ colors: { text: colors.placeholder } }}
               style={styles.search}
             />
-            <ButtonPrimary onPress={() => navigation.navigate('addMatches')}>criar partida</ButtonPrimary>
-            <ButtonSecondary onPress={() => navigation.navigate('MyMatches')}>Minhas partidas</ButtonSecondary>
+            <ButtonPrimary onPress={() => navigation.navigate("addMatches")}>criar partida</ButtonPrimary>
+            <ButtonSecondary onPress={() => navigation.navigate("MyMatches")}>Minhas partidas</ButtonSecondary>
           </View>
           <View>
             <Card style={styles.cards}>
@@ -39,11 +42,11 @@ const Home = ({ navigation }: any) => {
                 Futebol
               </Paragraph>
               <Card.Title title="Pelada no parque das aguas" />
-              <Card.Content >
+              <Card.Content>
                 <View style={styles.cardContentAvatar}>
-                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require('../../assets/avatar.png')} />
-                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require('../../assets/avatar.png')} />
-                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require('../../assets/avatar.png')} />
+                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require("../../assets/avatar.png")} />
+                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require("../../assets/avatar.png")} />
+                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require("../../assets/avatar.png")} />
                 </View>
                 <View>
                   <Text>Participantes: 3/10</Text>
@@ -62,12 +65,12 @@ const Home = ({ navigation }: any) => {
                 Futebol
               </Paragraph>
               <Card.Title title="Futebolzinho" />
-              <Card.Content >
+              <Card.Content>
                 <View style={styles.cardContentAvatar}>
-                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require('../../assets/avatar.png')} />
-                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require('../../assets/avatar.png')} />
-                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require('../../assets/avatar.png')} />
-                  <Button  labelStyle={{margin: 0, top: 0}} uppercase={false} onPress={() => {navigation.navigate("inviteUsers")}}>Convidar</Button>
+                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require("../../assets/avatar.png")} />
+                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require("../../assets/avatar.png")} />
+                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require("../../assets/avatar.png")} />
+                  <Button labelStyle={{ margin: 0, top: 0 }} uppercase={false} onPress={() => { navigation.navigate("inviteUsers"); }}>Convidar</Button>
                 </View>
                 <View>
                   <Text>Participantes: 3/10</Text>
@@ -83,17 +86,17 @@ const Home = ({ navigation }: any) => {
               </Card.Actions>
             </Card>
             <Card style={{ borderRadius: 10, marginTop: 10 }}>
-              <Paragraph style={{ color: 'white' }}>
+              <Paragraph style={{ color: "white" }}>
                 {/* <Button icon="camera"> */}
                 Futebol
                 {/* </Button> */}
               </Paragraph>
-              <Card.Title title="Pelada no parque das aguas" titleStyle={{ color: 'white' }} />
-              <Card.Content >
+              <Card.Title title="Pelada no parque das aguas" titleStyle={{ color: "white" }} />
+              <Card.Content>
                 <View style={styles.cardContentAvatar}>
-                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require('../../assets/avatar.png')} />
-                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require('../../assets/avatar.png')} />
-                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require('../../assets/avatar.png')} />
+                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require("../../assets/avatar.png")} />
+                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require("../../assets/avatar.png")} />
+                  <Avatar.Image style={{ marginLeft: 2, marginRight: 2 }} size={32} source={require("../../assets/avatar.png")} />
                 </View>
                 <View>
                   <Text>Participantes: 3/10</Text>
