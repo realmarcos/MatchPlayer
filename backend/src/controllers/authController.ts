@@ -5,6 +5,11 @@ import User from "../models/user";
 import logger from "../utils/logger";
 import checkUserExists from "../services/authServices/checkUserExists";
 
+interface RefreshTokenPayload {
+  email: string;
+  tokenVersion: number;
+}
+
 export const signup = async (req: Request, res: Response) => {
   const {
     name, username, email, phone, password,
@@ -61,13 +66,12 @@ export const sigin = async (req: Request, res: Response) => {
       // password hash
       bcrypt.compare(req.body.password, dbUser.password, (err, compareRes) => {
         if (err) { // error while comparing
-          res.status(502).json({ message: "error while checking user password" });
-        } else if (compareRes) { // password match
+          return res.status(502).json({ message: "error while checking user password" });
+        } if (compareRes) { // password match
           const token = jwt.sign({ email: req.body.email }, "secret", { expiresIn: "1h" });
-          res.status(200).json({ message: "user logged in", token });
-        } else { // password doesnt match
-          res.status(401).json({ message: "invalid credentials" });
-        }
+          return res.status(200).json({ user: dbUser, token });
+        } // password doesnt match
+        return res.status(200).json({ message: "invalid credentials" });
       });
     })
     .catch((err: any) => {
@@ -76,7 +80,6 @@ export const sigin = async (req: Request, res: Response) => {
 };
 export const isAuth = async (req: Request, res: Response) => {
   const authHeader = req.get("Authorization");
-  console.log(authHeader);
   if (!authHeader) {
     return res.status(401).json({ message: "not authenticated" });
   }
@@ -87,9 +90,15 @@ export const isAuth = async (req: Request, res: Response) => {
   } catch (err: any) {
     return res.status(500).json({ message: err.message || "could not decode the token" });
   }
+  const { email } = decodedToken as RefreshTokenPayload;
+  const user = await User.findOne({
+    where: {
+      email,
+    },
+  });
   if (!decodedToken) {
     res.status(401).json({ message: "unauthorized" });
   } else {
-    res.status(200).json({ message: "here is your resource" });
+    res.status(200).json({ user });
   }
 };

@@ -1,7 +1,9 @@
-import express from 'express'
-import * as userController from '../controllers/userController'
+import express from "express";
+import { isAuth } from "../controllers/authController";
+import * as userController from "../controllers/userController";
+
 const userRoutes = express();
 
-userRoutes.get("/user", userController.index);
+userRoutes.get("/user", isAuth, userController.index);
 
 export default userRoutes;
