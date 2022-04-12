@@ -12,10 +12,10 @@ import { AuthContext } from "../../context/Auth";
 
 function Login({ navigation }: any) {
   const [viewPass, setViewPass] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("marcos@gmail.com");
+  const [password, setPassword] = useState("1234567");
   const { colors } = useTheme();
-  const { handleLogin } = useContext(AuthContext);
+  const { handleLogin, loading } = useContext(AuthContext);
 
   const validateFields = () => {
     // eslint-disable-next-line no-useless-escape
@@ -84,7 +84,7 @@ function Login({ navigation }: any) {
         />
       </View>
 
-      <ButtonPrimary onPress={handleSubmit}>Entrar</ButtonPrimary>
+      <ButtonPrimary loading={loading} onPress={handleSubmit}>Entrar</ButtonPrimary>
 
       <View style={{ flexDirection: "row", flexWrap: "wrap", margin: 5 }}>
         <Text

@@ -3,14 +3,9 @@ import * as SecureStore from "expo-secure-store";
 import { showMessage } from "react-native-flash-message";
 import api from "../services/api";
 
-// interface userData {
-//   email: string;
-//   password: string;
-// }
-
 const useAuth = () => {
   const [isAuth, setIsAuth] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({});
 
   useEffect(() => {
@@ -42,11 +37,25 @@ const useAuth = () => {
       await SecureStore.setItemAsync("token", data.token);
       setUser(data.user);
       setIsAuth(true);
-      setLoading(false);
     } catch (err: any) {
-      showMessage({ message: "Usuário ou senha incorreto!", type: "danger", statusBarHeight: 35 });
-      setLoading(false);
+      if (err.message === "timeout of 5000ms exceeded") {
+        showMessage({
+          message: "Erro de conexão com o servidor!",
+          type: "danger",
+          statusBarHeight: 35,
+          description: "Verifique com o suporte do aplicativo.",
+          duration: 1000 * 3,
+        });
+      } else {
+        showMessage({
+          message: "Usuário ou senha incorreto!",
+          type: "danger",
+          statusBarHeight: 35,
+          duration: 1000 * 3,
+        });
+      }
     }
+    setLoading(false);
   };
 
   const handleLogout = async () => {
