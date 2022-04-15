@@ -3,9 +3,10 @@ import {
   Image, StyleSheet, Text, View,
 } from "react-native";
 import { Button, TextInput, useTheme } from "react-native-paper";
-import FlashMessage, { showMessage } from "react-native-flash-message";
+import { showMessage } from "react-native-flash-message";
 import Input from "../../components/Input";
 import { ButtonPrimary } from "../../components/Buttons";
+// eslint-disable-next-line
 import logoMain from "../../assets/logo-main.png";
 // import api from "../../services/api";
 import { AuthContext } from "../../context/Auth";
@@ -20,7 +21,7 @@ function Login({ navigation }: any) {
   const validateFields = () => {
     // eslint-disable-next-line no-useless-escape
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-    if (reg.test(email) === false && (email !== "" || password !== "")) {
+    if (reg.test(email) === false) {
       showMessage({
         message: "Email inválido!",
         type: "danger",
@@ -65,7 +66,6 @@ function Login({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <FlashMessage position="top" />
       <View style={{ alignItems: "center" }}>
         <Image
           style={styles.logo}
@@ -93,7 +93,6 @@ function Login({ navigation }: any) {
           Ainda não possui cadastro ?
         </Text>
         <Button mode="text" onPress={() => navigation.navigate("Signup")}>Cadastrar</Button>
-
       </View>
     </View>
   );

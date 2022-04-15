@@ -27,6 +27,7 @@
     "@typescript-eslint"
   ],
   "rules": {
+    "no-unused-vars": "warn",
     "quotes": [
       "error",
       "double"

@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/user";
 import logger from "../utils/logger";
 import checkUserExists from "../services/authServices/checkUserExists";
+import AppError from "../errors";
 
 interface RefreshTokenPayload {
   email: string;
@@ -15,26 +16,28 @@ export const signup = async (req: Request, res: Response) => {
     name, username, email, phone, password,
   } = req.body;
 
-  const usernameExists = await checkUserExists(username);
+  // const usernameExists = await checkUserExists(username);
   const emailExists = await checkUserExists(email);
   const phoneExists = await checkUserExists(phone);
 
-  if (usernameExists) {
-    return res.status(409).json({ message: `${username} user already exists` });
-  } if (emailExists) {
-    return res.status(409).json({ message: `${email} already exists` });
+  // if (usernameExists) {
+  // return res.status(409).json({ message: `${username} username_already_exists` });
+  // }
+  if (emailExists) {
+    throw new AppError("email_already_exists");
+    // return res.status(409).json({ message: "email already exists" });
   } if (phoneExists) {
-    return res.status(409).json({ message: `${phone} already exists` });
+    throw new AppError("phone_already_exists");
   }
 
-  if (username && email && password) {
+  if (email && password) {
     bcrypt.hash(password, 12, (err, passwordHash) => {
       if (err) {
         return res.status(500).json({ message: "couldnt hash the password" });
       } if (passwordHash) {
         return User.create(({
           name,
-          username,
+          // username,
           email,
           phone,
           password: passwordHash,
@@ -48,9 +51,10 @@ export const signup = async (req: Request, res: Response) => {
           });
       }
     });
-  } else if (!username || !email || !password) {
-    return res.status(400).json({ message: "error: username or password null" });
   }
+  // else if (!username || !email || !password) {
+  //   return res.status(400).json({ message: "error: username or password null" });
+  // }
 };
 export const sigin = async (req: Request, res: Response) => {
   // checks if email exists
@@ -71,7 +75,7 @@ export const sigin = async (req: Request, res: Response) => {
           const token = jwt.sign({ email: req.body.email }, "secret", { expiresIn: "1h" });
           return res.status(200).json({ user: dbUser, token });
         } // password doesnt match
-        return res.status(200).json({ message: "invalid credentials" });
+        return res.status(502).json({ message: "invalid credentials" });
       });
     })
     .catch((err: any) => {
@@ -97,8 +101,7 @@ export const isAuth = async (req: Request, res: Response) => {
     },
   });
   if (!decodedToken) {
-    res.status(401).json({ message: "unauthorized" });
-  } else {
-    res.status(200).json({ user });
+    return res.status(401).json({ message: "unauthorized" });
   }
+  return res.status(200).json({ user });
 };

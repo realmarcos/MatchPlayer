@@ -14,7 +14,7 @@ import { Optional } from "sequelize";
 interface userAttributes {
   id: number;
   name: string,
-  username: string,
+  username?: string,
   email: string,
   phone: string,
   password: string,
@@ -31,16 +31,16 @@ class User extends Model<userAttributes, userCreationAttributes> {
   @Column
     id: number;
 
-  @AllowNull(false)
+  // @AllowNull(false)
   @Column
     name: string;
 
-  @AllowNull(false)
+  // @AllowNull(false)
   @Unique
   @Column
     username: string;
 
-  @AllowNull(false)
+  // @AllowNull(false)
   @Unique
   @Column
     email: string;
@@ -49,7 +49,7 @@ class User extends Model<userAttributes, userCreationAttributes> {
   @Column
     phone: string;
 
-  @AllowNull(false)
+  // @AllowNull(false)
   @Column
     password: string;
 

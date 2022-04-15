@@ -10,6 +10,7 @@ import {
   Nunito_700Bold,
 } from "@expo-google-fonts/nunito";
 import AppLoading from "expo-app-loading";
+import FlashMessage from "react-native-flash-message";
 import Routes from "./src/routes";
 import theme from "./src/theme";
 import { AuthProvider } from "./src/context/Auth";
@@ -29,6 +30,7 @@ export default function App() {
       <NavigationContainer>
         <AuthProvider>
           <StatusBar translucent backgroundColor="transparent" />
+          <FlashMessage position="top" />
           <Routes />
         </AuthProvider>
       </NavigationContainer>
