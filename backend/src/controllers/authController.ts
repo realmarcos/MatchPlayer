@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { generateFromEmail } from "unique-username-generator";
 import User from "../models/user";
 import logger from "../utils/logger";
 import checkUserExists from "../services/authServices/checkUserExists";
@@ -13,31 +14,27 @@ interface RefreshTokenPayload {
 
 export const signup = async (req: Request, res: Response) => {
   const {
-    name, username, email, phone, password,
+    name, email, phone, password,
   } = req.body;
 
-  // const usernameExists = await checkUserExists(username);
   const emailExists = await checkUserExists(email);
   const phoneExists = await checkUserExists(phone);
 
-  // if (usernameExists) {
-  // return res.status(409).json({ message: `${username} username_already_exists` });
-  // }
   if (emailExists) {
     throw new AppError("email_already_exists");
-    // return res.status(409).json({ message: "email already exists" });
   } if (phoneExists) {
     throw new AppError("phone_already_exists");
   }
 
   if (email && password) {
     bcrypt.hash(password, 12, (err, passwordHash) => {
+      const username = generateFromEmail(email, 3); // generate username with email
       if (err) {
         return res.status(500).json({ message: "couldnt hash the password" });
       } if (passwordHash) {
         return User.create(({
           name,
-          // username,
+          username,
           email,
           phone,
           password: passwordHash,

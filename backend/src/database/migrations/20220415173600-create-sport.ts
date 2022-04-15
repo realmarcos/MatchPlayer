@@ -3,7 +3,7 @@ import { QueryInterface, DataTypes } from "sequelize";
 
 module.exports = {
   async up(queryInterface: QueryInterface) {
-    await queryInterface.createTable("Users", {
+    await queryInterface.createTable("Sports", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,24 +13,6 @@ module.exports = {
       name: {
         allowNull: false,
         type: DataTypes.STRING,
-      },
-      username: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
-      email: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
-      phone: {
-        type: DataTypes.STRING,
-      },
-      password: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
-      picture: {
-        type: DataTypes.BLOB,
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +25,6 @@ module.exports = {
     });
   },
   async down(queryInterface: QueryInterface) {
-    await queryInterface.dropTable("Users");
+    await queryInterface.dropTable("Sports");
   },
 };
