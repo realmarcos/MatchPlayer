@@ -6,6 +6,7 @@ import User from "../models/user";
 import logger from "../utils/logger";
 import checkUserExists from "../services/authServices/checkUserExists";
 import AppError from "../errors";
+import userSport from "../models/userssports";
 
 interface RefreshTokenPayload {
   email: string;
@@ -14,9 +15,9 @@ interface RefreshTokenPayload {
 
 export const signup = async (req: Request, res: Response) => {
   const {
-    name, email, phone, password,
+    name, email, phone, password, sports,
   } = req.body;
-
+  const username = generateFromEmail(email, 3); // generate username with email
   const emailExists = await checkUserExists(email);
   const phoneExists = await checkUserExists(phone);
 
@@ -27,31 +28,29 @@ export const signup = async (req: Request, res: Response) => {
   }
 
   if (email && password) {
-    bcrypt.hash(password, 12, (err, passwordHash) => {
-      const username = generateFromEmail(email, 3); // generate username with email
-      if (err) {
-        return res.status(500).json({ message: "couldnt hash the password" });
-      } if (passwordHash) {
-        return User.create(({
+    const passwordHash = await bcrypt.hash(password, 12);
+    if (passwordHash) {
+      try {
+        const user = await User.create({
           name,
           username,
           email,
           phone,
           password: passwordHash,
-        }))
-          .then(() => {
-            res.status(200).json({ message: "user created" });
-          })
-          .catch((err) => {
-            logger.error(err);
-            res.status(502).json({ message: "error while creating the user" });
+        });
+        user.reload();
+        sports.forEach((sport: number) => { // inser sport in user
+          userSport.create({
+            userId: user.id,
+            sportId: sport,
           });
+        });
+        res.status(200).json({ message: "user created" });
+      } catch (err) {
+        res.status(502).json({ message: "error creating the user" });
       }
-    });
+    }
   }
-  // else if (!username || !email || !password) {
-  //   return res.status(400).json({ message: "error: username or password null" });
-  // }
 };
 export const sigin = async (req: Request, res: Response) => {
   // checks if email exists

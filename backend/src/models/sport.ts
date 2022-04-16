@@ -7,8 +7,11 @@ import {
   CreatedAt,
   UpdatedAt,
   AllowNull,
+  BelongsToMany,
 } from "sequelize-typescript";
 import { Optional } from "sequelize";
+import User from "./user";
+import userSport from "./userssports";
 
 interface sportAttributes {
   id: number;
@@ -32,6 +35,9 @@ class Sport extends Model<sportAttributes, sportCreationAttributes> {
 
   @UpdatedAt
     updatedAt: Date;
+
+  @BelongsToMany(() => User, () => userSport)
+    users: Array<User & { userSport: userSport }>;
 }
 
 export default Sport;
