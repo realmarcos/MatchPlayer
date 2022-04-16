@@ -41,10 +41,14 @@ function Login({ navigation }: any) {
     },
   });
 
+  const futebol = 1;
+  const volei = 2;
+
   const { colors } = useTheme();
   const [viewPass, setViewPass] = useState(true);
-  const [checkFut, setCheckFut] = useState(false);
+  const [checkFut, setCheckFut] = useState(true);
   const [checkVol, setCheckVol] = useState(false);
+  const sports = [futebol];
   const [viewPassRepiter, setViewPassRepiter] = useState(true);
   const [passRepiter, setPassRepiter] = useState("");
   const [loading, setLoading] = useState(false);
@@ -61,6 +65,7 @@ function Login({ navigation }: any) {
         type: "danger",
         description: "Por favor preencha os campos obrigatórios.",
         statusBarHeight: 35,
+        duration: 1000 * 3,
       });
       return false;
     }
@@ -70,19 +75,48 @@ function Login({ navigation }: any) {
         description: "Por favor preencha corretamente.",
         type: "danger",
         statusBarHeight: 35,
+        duration: 1000 * 3,
       });
       return false;
+    }
+    if (!checkFut && !checkVol) {
+      showMessage({
+        message: "Nehum esporte escolhido!",
+        description: "Por favor marque seu esporte favorito.",
+        type: "danger",
+        statusBarHeight: 35,
+        duration: 1000 * 3,
+      });
     }
     return true;
   };
 
+  const handleSports = () => {
+    while (sports.length) {
+      sports.pop();
+    }
+    if (checkFut && !checkVol) {
+      sports.push(futebol);
+    }
+    if (checkVol && !checkFut) {
+      sports.push(volei);
+    }
+    if (checkVol && checkFut) {
+      sports.push(futebol);
+      sports.push(volei);
+    }
+  };
+  // handleSports();
+
   const handleSignup = async () => {
+    handleSports();
     try {
       await api.post("/signup", {
         name: user.name,
         phone: user.phone,
         email: user.email,
         password: user.password,
+        sports,
       });
       handleLogin(user.email, user.password);
     } catch (err: any) {
@@ -150,6 +184,7 @@ function Login({ navigation }: any) {
           value={user.phone}
           render={(props) => (
             <TextInputMask
+              // eslint-disable-next-line react/jsx-props-no-spreading
               {...props}
               // value={user.phone}
               type="cel-phone"
