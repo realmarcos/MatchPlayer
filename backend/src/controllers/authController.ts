@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { generateFromEmail } from "unique-username-generator";
@@ -59,6 +59,7 @@ export const sigin = async (req: Request, res: Response) => {
       email: req.body.email,
     },
   })
+    // eslint-disable-next-line consistent-return
     .then((dbUser) => {
       if (!dbUser) {
         return res.status(404).json({ message: "user not found" });
@@ -78,7 +79,7 @@ export const sigin = async (req: Request, res: Response) => {
       logger.error(err);
     });
 };
-export const isAuth = async (req: Request, res: Response) => {
+export const isAuth = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.get("Authorization");
   if (!authHeader) {
     return res.status(401).json({ message: "not authenticated" });
@@ -91,7 +92,7 @@ export const isAuth = async (req: Request, res: Response) => {
     return res.status(500).json({ message: err.message || "could not decode the token" });
   }
   const { email } = decodedToken as RefreshTokenPayload;
-  const user = await User.findOne({
+  await User.findOne({
     where: {
       email,
     },
@@ -99,5 +100,5 @@ export const isAuth = async (req: Request, res: Response) => {
   if (!decodedToken) {
     return res.status(401).json({ message: "unauthorized" });
   }
-  return res.status(200).json({ user });
+  return next();
 };
