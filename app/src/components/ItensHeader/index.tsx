@@ -46,7 +46,7 @@ function ItensHeader(props: any) {
           </TouchableOpacity>
         )}
       >
-        <Menu.Item onPress={() => { props.nav.navigate("profile"); }} title="Perfil" />
+        <Menu.Item onPress={() => { props.nav.navigate("profile"); closeMenu(); }} title="Perfil" />
         <Menu.Item onPress={handleLogout} title="Sair" />
       </Menu>
     </View>

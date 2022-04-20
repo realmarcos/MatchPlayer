@@ -59,7 +59,7 @@ function Login({ navigation }: any) {
   });
 
   const validateFields = () => {
-    if (user.name === "" || user.email === "" || user.phone === "" || user.password === "") {
+    if (user?.name === "" || user?.email === "" || user?.phone === "" || user?.password === "") {
       showMessage({
         message: "Campos obrigatórios!",
         type: "danger",
@@ -69,7 +69,7 @@ function Login({ navigation }: any) {
       });
       return false;
     }
-    if (user.password !== passRepiter) {
+    if (user?.password !== passRepiter) {
       showMessage({
         message: "As senhas não são identicas!",
         description: "Por favor preencha corretamente.",
@@ -87,6 +87,7 @@ function Login({ navigation }: any) {
         statusBarHeight: 35,
         duration: 1000 * 3,
       });
+      return false;
     }
     return true;
   };
@@ -112,13 +113,13 @@ function Login({ navigation }: any) {
     handleSports();
     try {
       await api.post("/signup", {
-        name: user.name,
-        phone: user.phone,
-        email: user.email,
-        password: user.password,
+        name: user?.name,
+        phone: user?.phone,
+        email: user?.email,
+        password: user?.password,
         sports,
       });
-      handleLogin(user.email, user.password);
+      handleLogin(user?.email, user?.password);
     } catch (err: any) {
       if (err.response?.data?.error === "email_already_exists") {
         showMessage({
@@ -181,12 +182,12 @@ function Login({ navigation }: any) {
         <Input
           label="Telefone*"
           placeholder="Telefone*"
-          value={user.phone}
-          render={(props) => (
+          value={user?.phone}
+          render={(props: any) => (
             <TextInputMask
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...props}
-              // value={user.phone}
+              // value={user?.phone}
               type="cel-phone"
               maxLength={15}
               // ref={ref}
@@ -198,7 +199,7 @@ function Login({ navigation }: any) {
           label="Senha*"
           secureTextEntry={viewPass}
           placeholder="Senha*"
-          // value={user.password}
+          // value={user?.password}
           onChangeText={(text: string) => setUser((value) => ({ ...value, password: text }))}
           right={<TextInput.Icon color={colors.primary} onPress={() => { setViewPass(!viewPass); }} name="eye" />}
         />

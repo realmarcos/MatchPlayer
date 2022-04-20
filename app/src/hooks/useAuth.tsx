@@ -11,13 +11,14 @@ const useAuth = () => {
   useEffect(() => {
     async function loadSecureStore() {
       const token = await SecureStore.getItemAsync("token");
+      const userId = await SecureStore.getItemAsync("userId");
       if (token) {
         api.defaults.headers.common.Authorization = `Bearer ${token}`;
-        const { data } = await api.get("/sigin");
-        if (data) {
-          setUser(data.user);
+        try {
+          const { data } = await api.get(`/user/${userId}`);
+          setUser(data);
           setIsAuth(true);
-        } else {
+        } catch (error) {
           setUser({});
           setIsAuth(false);
         }
@@ -34,6 +35,7 @@ const useAuth = () => {
         password,
       });
       api.defaults.headers.common.Authorization = `Bearer ${data.token}`;
+      await SecureStore.setItemAsync("userId", JSON.stringify(data.user?.id));
       await SecureStore.setItemAsync("token", data.token);
       setUser(data.user);
       setIsAuth(true);
@@ -74,7 +76,7 @@ const useAuth = () => {
   };
 
   return {
-    isAuth, user, loading, handleLogin, handleLogout,
+    isAuth, user, loading, handleLogin, handleLogout, setUser,
   };
 };
 
