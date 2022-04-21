@@ -6,6 +6,8 @@ import {
 import { getStatusBarHeight } from "react-native-status-bar-height";
 import { AuthContext } from "../../context/Auth";
 
+const avatar = require("../../assets/avatar.png");
+
 function ItensHeader(props: any) {
   const { colors } = useTheme();
   const [visible, setVisible] = React.useState(false);
@@ -29,7 +31,7 @@ function ItensHeader(props: any) {
         icon="bell"
         size={32}
         color={colors.primary}
-        onPress={() => props.nav.navigate("Notifications")}
+        onPress={() => props.nav.push("Notifications")}
       />
       <Menu
         visible={visible}
@@ -39,14 +41,14 @@ function ItensHeader(props: any) {
           <TouchableOpacity onPress={openMenu}>
             <Avatar.Image
               size={38}
-              style={{ marginTop: 10 }}
-              source={require("../../assets/avatar.png")}
+              style={{ marginTop: 10, backgroundColor: "white" }}
+              source={avatar}
             />
 
           </TouchableOpacity>
         )}
       >
-        <Menu.Item onPress={() => { props.nav.navigate("profile"); closeMenu(); }} title="Perfil" />
+        <Menu.Item onPress={() => { props.nav.push("profile"); closeMenu(); }} title="Perfil" />
         <Menu.Item onPress={handleLogout} title="Sair" />
       </Menu>
     </View>

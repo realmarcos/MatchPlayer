@@ -1,5 +1,5 @@
 import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack";
 import LoggedOnRoutesTabs from "./loggedOnTabs.routes";
 import AddMatches from "../screens/Matches/addMatche";
 import Profile from "../screens/Profile";
@@ -11,13 +11,16 @@ import InviteUsers from "../screens/Users/InveteUsers";
 import EditProfile from "../screens/Profile/editProfile";
 import AlterPassword from "../screens/Profile/alterPass";
 
-const AppStack = createNativeStackNavigator();
+const AppStack = createStackNavigator();
 
 // eslint-disable-next-line react/function-component-definition
 const AppRoutes: React.FC = () => (
   <AppStack.Navigator
     screenOptions={{
       headerShown: false,
+      animationEnabled: true,
+      cardStyleInterpolator: CardStyleInterpolators.forFadeFromCenter,
+      // animationTypeForReplace: "pop",
     }}
   >
     <AppStack.Screen name="LoggedOnRoutes" component={LoggedOnRoutesTabs} />

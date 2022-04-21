@@ -9,7 +9,7 @@ interface Header {
 }
 
 function Header(props: Header, { navigation }: any) {
-  const { colors, fonts } = useTheme();
+  const { colors } = useTheme();
   const statusBarHeight = getStatusBarHeight();
   const styles = StyleSheet.create({
     header: {

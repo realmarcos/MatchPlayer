@@ -14,6 +14,7 @@ import FlashMessage from "react-native-flash-message";
 import Routes from "./src/routes";
 import theme from "./src/theme";
 import { AuthProvider } from "./src/context/Auth";
+import "react-native-gesture-handler";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
