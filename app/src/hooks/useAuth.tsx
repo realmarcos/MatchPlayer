@@ -7,6 +7,7 @@ const useAuth = () => {
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({});
+  const [sports, setSport] = useState({});
 
   useEffect(() => {
     async function loadSecureStore() {
@@ -17,9 +18,11 @@ const useAuth = () => {
         try {
           const { data } = await api.get(`/user/${userId}`);
           setUser(data);
+          setSport(data.sports);
           setIsAuth(true);
         } catch (error) {
           setUser({});
+          setSport({});
           setIsAuth(false);
         }
       }
@@ -59,7 +62,6 @@ const useAuth = () => {
     }
     setLoading(false);
   };
-
   const handleLogout = async () => {
     setLoading(true);
 
@@ -76,7 +78,7 @@ const useAuth = () => {
   };
 
   return {
-    isAuth, user, loading, handleLogin, handleLogout, setUser,
+    isAuth, user, loading, handleLogin, handleLogout, setUser, sports,
   };
 };
 

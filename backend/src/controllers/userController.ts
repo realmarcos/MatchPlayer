@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { Request, Response } from "express";
+import bcrypt from "bcryptjs";
 import AppError from "../errors";
 import Sport from "../models/sport";
 import User from "../models/user";
@@ -12,8 +13,8 @@ export const update = async (req: Request, res: Response) => {
   const { userId } = req.params;
   const {
     name, username, email, phone, sports,
+    password,
   } = req.body;
-  console.log(req.body);
 
   if (email) {
     const emailExists = await checkUserExists(email);
@@ -50,18 +51,30 @@ export const update = async (req: Request, res: Response) => {
   }
   await user.reload();
 
-  sports.forEach(() => {
-    userSport.destroy({
-      where: {
-        userId,
-      },
+  if (sports) {
+    sports.forEach(() => {
+      userSport.destroy({
+        where: {
+          userId,
+        },
+      });
     });
-  });
-  sports.forEach((sport: number) => { // inser sport in user
-    userSport.create({
-      userId: user.id,
-      sportId: sport,
+    sports.forEach((sport: number) => { // inser sport in user
+      userSport.create({
+        userId: user.id,
+        sportId: sport,
+      });
     });
+  }
+
+  bcrypt.compare(password, user.password, async (err, compareRes) => {
+    if (err) {
+      const passwordHash = await bcrypt.hash(password, 12);
+      user.update({ password: passwordHash });
+      user.reload();
+    } if (compareRes) {
+      throw new AppError("password_already_exists", 401);
+    }
   });
 
   return res.status(200).json(user);

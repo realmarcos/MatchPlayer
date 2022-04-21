@@ -7,6 +7,7 @@ import logger from "../utils/logger";
 import checkUserExists from "../services/authServices/checkUserExists";
 import AppError from "../errors";
 import userSport from "../models/userssports";
+import Sport from "../models/sport";
 
 interface RefreshTokenPayload {
   email: string;
@@ -55,6 +56,8 @@ export const signup = async (req: Request, res: Response) => {
 export const sigin = async (req: Request, res: Response) => {
   // checks if email exists
   User.findOne({
+    // attributes: ["id", "name", "username", "email", "phone", "picture"],
+    include: { model: Sport, as: "sports", attributes: ["id", "name"] },
     where: {
       email: req.body.email,
     },

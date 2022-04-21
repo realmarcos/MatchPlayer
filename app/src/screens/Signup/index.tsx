@@ -81,7 +81,7 @@ function Login({ navigation }: any) {
     }
     if (!checkFut && !checkVol) {
       showMessage({
-        message: "Nehum esporte escolhido!",
+        message: "Nenhum esporte escolhido!",
         description: "Por favor marque seu esporte favorito.",
         type: "danger",
         statusBarHeight: 35,

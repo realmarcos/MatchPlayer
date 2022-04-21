@@ -47,6 +47,7 @@ function Profile({ navigation }: any) {
         showMessage({
           message: "Erro ao buscar dados do usuário!",
           description: err.message,
+          type: "danger",
 
         });
       }
@@ -107,13 +108,13 @@ function Profile({ navigation }: any) {
             theme={{ colors: { text: colors.surface } }}
           >
             <Text style={{ fontWeight: "bold" }} theme={{ colors: { text: colors.surface } }}>Esportes: </Text>
-            {sports.map((sport) => `${sport.name} `)}
+            {sports.map((sport: any) => `${sport.name} `)}
           </Text>
         </View>
         <View style={stylesLocal.btns}>
           <ButtonSecondary onPress={() => navigation.navigate("Friends")}>Amigos</ButtonSecondary>
           <ButtonPrimary onPress={() => navigation.navigate("editProfile")}>editar perfil</ButtonPrimary>
-          <ButtonPrimary onPress={() => { console.log("alterar senha"); }}>alterar senha</ButtonPrimary>
+          <ButtonPrimary onPress={() => navigation.navigate("alterPass")}>alterar senha</ButtonPrimary>
 
         </View>
 

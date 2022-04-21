@@ -14,7 +14,7 @@ import { AuthContext } from "../../context/Auth";
 function Login({ navigation }: any) {
   const [viewPass, setViewPass] = useState(true);
   const [email, setEmail] = useState("marcos@gmail.com");
-  const [password, setPassword] = useState("1234567");
+  const [password, setPassword] = useState("12345");
   const { colors } = useTheme();
   const { handleLogin, loading } = useContext(AuthContext);
 

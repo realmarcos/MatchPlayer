@@ -9,6 +9,7 @@ import Notifications from "../screens/Notifications";
 import AddLocations from "../screens/Locations/addLocations";
 import InviteUsers from "../screens/Users/InveteUsers";
 import EditProfile from "../screens/Profile/editProfile";
+import AlterPassword from "../screens/Profile/alterPass";
 
 const AppStack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ const AppRoutes: React.FC = () => (
     <AppStack.Screen name="addLocations" component={AddLocations} />
     <AppStack.Screen name="inviteUsers" component={InviteUsers} />
     <AppStack.Screen name="editProfile" component={EditProfile} />
+    <AppStack.Screen name="alterPass" component={AlterPassword} />
   </AppStack.Navigator>
 );
 
