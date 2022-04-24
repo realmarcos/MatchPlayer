@@ -68,17 +68,19 @@ export const update = async (req: Request, res: Response) => {
     });
   }
 
-  const passwordHash = await bcrypt.hash(password, 12);
-  bcrypt.compare(password, user.password, (err, compareRes) => {
-    if (err) {
-      logger.error(err);
-    } if (compareRes) {
-      throw new AppError("password_already_exists", 401);
-    } else {
-      user.update({ password: passwordHash });
-      user.reload();
-    }
-  });
+  if (password) {
+    const passwordHash = await bcrypt.hash(password, 12);
+    bcrypt.compare(password, user.password, (err, compareRes) => {
+      if (err) {
+        logger.error(err);
+      } if (compareRes) {
+        throw new AppError("password_already_exists", 401);
+      } else {
+        user.update({ password: passwordHash });
+        user.reload();
+      }
+    });
+  }
 
   return res.status(200).json(user);
 };

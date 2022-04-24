@@ -12,6 +12,8 @@ import {
 import { Optional } from "sequelize";
 import User from "./user";
 import userSport from "./userssports";
+import Local from "./local";
+import localSport from "./localsports";
 
 interface sportAttributes {
   id: number;
@@ -38,6 +40,9 @@ class Sport extends Model<sportAttributes, sportCreationAttributes> {
 
   @BelongsToMany(() => User, () => userSport)
     users: Array<User & { userSport: userSport }>;
+
+  @BelongsToMany(() => Local, () => localSport)
+    locals: Array<Local & { userSport: localSport }>;
 }
 
 export default Sport;

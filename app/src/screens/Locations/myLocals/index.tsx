@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, View } from "react-native";
 import {
-  Card, Paragraph, Searchbar, useTheme, Title,
+  Card, Paragraph, Searchbar, useTheme, Title, IconButton,
 } from "react-native-paper";
 import { showMessage } from "react-native-flash-message";
-import Header from "../../components/Header";
-import ItensHeader from "../../components/ItensHeader";
-import { styles } from "../../theme/styles";
-import { ButtonCards, ButtonPrimary, ButtonSecondary } from "../../components/Buttons";
-import api from "../../services/api";
+import Header from "../../../components/Header";
+import ItensHeader from "../../../components/ItensHeader";
+import { styles } from "../../../theme/styles";
+import { ButtonCards, ButtonPrimary, ButtonSecondary } from "../../../components/Buttons";
+import api from "../../../services/api";
+import { AuthContext } from "../../../context/Auth";
 
 /** Screen Locations */
-function Locations({ navigation }: any) {
+function MyLocals({ navigation }: any) {
   const [search, setSearch] = useState("");
   const { colors } = useTheme();
   const onChangeSearch = (query: any) => setSearch(query);
   const [locals, setLocals] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -24,7 +26,10 @@ function Locations({ navigation }: any) {
       const fetchLocals = async () => {
         try {
           const { data } = await api.get("/local", {
-            params: { search },
+            params: {
+              search,
+              userIdCreated: user.id,
+            },
           });
           setLocals(data.locals);
         } catch (err: any) {
@@ -43,7 +48,14 @@ function Locations({ navigation }: any) {
 
   return (
     <>
-      <Header title="MathPlayer - Locais">
+      <Header title="MathPlayer - Meus Locais">
+        <IconButton
+          icon="keyboard-backspace"
+          size={32}
+          color={colors.primary}
+          style={{ marginRight: -20 }}
+          onPress={() => navigation.goBack()}
+        />
         <ItensHeader nav={navigation} />
       </Header>
       <ScrollView>
@@ -57,8 +69,7 @@ function Locations({ navigation }: any) {
               theme={{ colors: { text: colors.placeholder } }}
               style={styles.search}
             />
-            <ButtonPrimary onPress={() => { navigation.navigate("addLocations"); }}>adicionar novo local</ButtonPrimary>
-            <ButtonSecondary onPress={() => navigation.navigate("Mylocals")}>meus locais</ButtonSecondary>
+            <ButtonPrimary onPress={() => navigation.navigate("addLocations")}>adicionar novo local</ButtonPrimary>
           </View>
           <View>
             {
@@ -97,61 +108,10 @@ function Locations({ navigation }: any) {
                     </Paragraph>
                   )
             }
-            {/* <Card style={styles.cards}>
-              <Card.Title title="Campo Parque das águas" />
-              <Card.Content>
-                <Paragraph>
-                  Futebol
-                </Paragraph>
-                <Title>Card title</Title>
-                <View>
-                  <Text>Aberto de seg a dom das 12:00 até 23:00</Text>
-                  <Text>Rua dos bois, Parque das Àguas </Text>
-                </View>
-              </Card.Content>
-              <Card.Actions style={styles.cardsActions}>
-                <ButtonCards>criar partida</ButtonCards>
-              </Card.Actions>
-            </Card>
-            <Card style={styles.cards}>
-              <Paragraph>
-                Futebol/Vôlei
-              </Paragraph>
-              <Card.Title title="Escola Amâncio" />
-              <Card.Content>
-                <View>
-                  <Text>Aberto de seg a dom das 12:00 até 23:00</Text>
-                  <Text>Rua amâncio, Setor oeste</Text>
-                </View>
-              </Card.Content>
-              <Card.Actions style={styles.cardsActions2}>
-                <ButtonCards>validar</ButtonCards>
-                <ButtonCards>criar partida</ButtonCards>
-              </Card.Actions>
-            </Card>
-            <Card style={styles.cards}>
-              <Paragraph>
-                Futebol
-              </Paragraph>
-              <Card.Title title="Campo do Centro" />
-              <Card.Content>
-                <View style={styles.cardContentAvatar}>
-                  <Text theme={{ colors: { text: colors.primary } }}>Não validado</Text>
-                </View>
-                <View>
-                  <Text>Aberto de seg a dom das 12:00 até 23:00</Text>
-                  <Text>Rua amâncio, Setor oeste</Text>
-                </View>
-              </Card.Content>
-              <Card.Actions style={styles.cardsActions2}>
-                <ButtonCards>validar</ButtonCards>
-                <ButtonCards>criar partida</ButtonCards>
-              </Card.Actions>
-            </Card> */}
           </View>
         </View>
       </ScrollView>
     </>
   );
 }
-export default Locations;
+export default MyLocals;

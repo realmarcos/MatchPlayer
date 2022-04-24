@@ -9,6 +9,11 @@ import AppError from "../errors";
 import userSport from "../models/userssports";
 import Sport from "../models/sport";
 
+/**
+ * Essa gambiarra foi feita com muito
+ * carinho e está funcionando perfeitamente 🙂
+ */
+
 interface RefreshTokenPayload {
   email: string;
   tokenVersion: number;

@@ -1,4 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
+import Local from "../models/local";
+import localSport from "../models/localsports";
 import Sport from "../models/sport";
 import User from "../models/user";
 import userSport from "../models/userssports";
@@ -13,6 +15,8 @@ const models = [
   User,
   userSport,
   Sport,
+  Local,
+  localSport,
 ];
 
 sequelize.addModels(models);

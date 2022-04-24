@@ -10,6 +10,7 @@ import AddLocations from "../screens/Locations/addLocations";
 import InviteUsers from "../screens/Users/InveteUsers";
 import EditProfile from "../screens/Profile/editProfile";
 import AlterPassword from "../screens/Profile/alterPass";
+import MyLocals from "../screens/Locations/myLocals";
 
 const AppStack = createStackNavigator();
 
@@ -33,6 +34,7 @@ const AppRoutes: React.FC = () => (
     <AppStack.Screen name="inviteUsers" component={InviteUsers} />
     <AppStack.Screen name="editProfile" component={EditProfile} />
     <AppStack.Screen name="alterPass" component={AlterPassword} />
+    <AppStack.Screen name="Mylocals" component={MyLocals} />
   </AppStack.Navigator>
 );
 

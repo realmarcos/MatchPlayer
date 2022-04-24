@@ -9,7 +9,7 @@ const theme = {
     accent: "#f1c40f",
     background: "#FFFFFF",
     surface: "#3D1459",
-    text: "white",
+    text: "#FFFFFF",
     disabled: "#707070",
     placeholder: "#707070",
     backdrop: "#F26A4B",
