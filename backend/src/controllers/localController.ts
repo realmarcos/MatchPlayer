@@ -9,7 +9,10 @@ const show = async (req: Request, res: Response): Promise<Response> => {
   const { localId } = req.params;
 
   const local = await Local.findByPk(localId, {
-    include: { model: User, as: "user", attributes: ["id", "name"] },
+    include: [
+      { model: User, as: "user", attributes: ["id", "name"] },
+      { model: Sport, as: "sports", attributes: ["id", "name"] },
+    ],
   });
 
   return res.status(200).json(local);

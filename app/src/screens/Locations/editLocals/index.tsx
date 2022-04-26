@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import {
   Checkbox, IconButton, Paragraph, Text, useTheme,
@@ -20,8 +20,9 @@ interface localData {
   complement?: string;
 }
 
-/** Screen addLocations or Matches */
-function AddLocations({ navigation }: any) {
+/** Screen EditLocations or Matches */
+function EditLocals({ navigation, route }: any) {
+  const { localId } = route.params;
   const futebol = 1; // representando o id do esporte dentro do banco
   const volei = 2;
   const sports = [futebol];
@@ -32,6 +33,29 @@ function AddLocations({ navigation }: any) {
   const [local, setLocal] = useState<localData | null>({
     name: "", description: "", street: "", number: "", district: "", complement: "",
   });
+
+  useEffect(() => {
+    async function getLocal() {
+      try {
+        const { data } = await api.get(`/local/${localId}`);
+        setLocal(data);
+        if (data.sports.find((sport: any) => sport.id === futebol)) {
+          setCheckFut(true);
+        }
+        if (data.sports.find((sport: any) => sport.id === volei)) {
+          setCheckVol(true);
+        }
+      } catch (err: any) {
+        showMessage({
+          message: "Erro ao buscar dados do local!",
+          description: err.message,
+          type: "danger",
+          statusBarHeight: 35,
+        });
+      }
+    }
+    getLocal();
+  }, []);
 
   const stylesLocal = StyleSheet.create({
     checkbox: {
@@ -88,7 +112,7 @@ function AddLocations({ navigation }: any) {
   const handleSave = async () => {
     handleSports();
     try {
-      await api.post("/local", {
+      await api.put(`/local/${localId}`, {
         name: local?.name,
         description: local?.description,
         street: local?.street,
@@ -125,7 +149,7 @@ function AddLocations({ navigation }: any) {
 
   return (
     <>
-      <Header title="Adicionar local">
+      <Header title="Editar local">
         <IconButton
           icon="keyboard-backspace"
           size={32}
@@ -222,4 +246,4 @@ function AddLocations({ navigation }: any) {
     </>
   );
 }
-export default AddLocations;
+export default EditLocals;
