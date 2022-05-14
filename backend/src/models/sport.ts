@@ -41,8 +41,8 @@ class Sport extends Model<sportAttributes, sportCreationAttributes> {
   @BelongsToMany(() => User, () => userSport)
     users: Array<User & { userSport: userSport }>;
 
-  @BelongsToMany(() => Local, () => localSport)
-    locals: Array<Local & { userSport: localSport }>;
+  // @BelongsToMany(() => Local, () => localSport)
+  //   locals: Array<Local & { localSport: localSport }>;
 }
 
 export default Sport;

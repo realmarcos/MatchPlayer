@@ -13,6 +13,8 @@ import {
 import { Optional } from "sequelize";
 import Sport from "./sport";
 import userSport from "./userssports";
+import Partida from "./match";
+import Guest from "./guest";
 
 interface userAttributes {
   id: number;
@@ -67,6 +69,9 @@ class User extends Model<userAttributes, userCreationAttributes> {
 
   @BelongsToMany(() => Sport, () => userSport)
     sports: Sport[];
+
+  // @BelongsToMany(() => Partida, () => Guest)
+  //   partidas: Array<Partida & { Guest: Guest }>;
 }
 
 export default User;

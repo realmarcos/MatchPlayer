@@ -6,7 +6,7 @@ import {
 
 const localRoutes = express();
 
-localRoutes.get("/local/:localId", isAuth, show);
+localRoutes.get("/local/:localId", show);
 localRoutes.get("/local", isAuth, index);
 localRoutes.post("/local", isAuth, create);
 localRoutes.delete("/local/:localId", isAuth, remove);

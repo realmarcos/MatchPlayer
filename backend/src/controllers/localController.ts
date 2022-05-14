@@ -34,7 +34,7 @@ const index = async (req: Request, res: Response) => {
       userIdCreated,
     };
     whereCond = newWhere;
-  } else {
+  } else if (search) {
     const newWhere = {
       [Op.or]: [
         {
