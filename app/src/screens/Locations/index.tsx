@@ -3,7 +3,7 @@ import {
   ActivityIndicator, ScrollView, Text, View,
 } from "react-native";
 import {
-  Card, Paragraph, Searchbar, useTheme, Title, Avatar, IconButton,
+  Card, Paragraph, Searchbar, useTheme, Title, IconButton,
 } from "react-native-paper";
 import { showMessage } from "react-native-flash-message";
 import Header from "../../components/Header";
@@ -88,7 +88,7 @@ function Locations({ navigation }: any) {
                                 ? (
                                   <Paragraph key={futebol}>
                                     <IconButton style={{ paddingTop: 10 }} key={futebol} size={20} icon="soccer" />
-                                    <Text style={{ marginTop: "-60" }}>Futebol</Text>
+                                    <Text>Futebol</Text>
                                   </Paragraph>
                                 )
                                 : ""

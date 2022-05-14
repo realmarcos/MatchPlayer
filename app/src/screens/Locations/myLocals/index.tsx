@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ActivityIndicator, ScrollView, View } from "react-native";
+import {
+  ActivityIndicator, ScrollView, Text, View,
+} from "react-native";
 import {
   Card, Paragraph, Searchbar, useTheme, Title, IconButton,
 } from "react-native-paper";
@@ -7,12 +9,14 @@ import { showMessage } from "react-native-flash-message";
 import Header from "../../../components/Header";
 import ItensHeader from "../../../components/ItensHeader";
 import { styles } from "../../../theme/styles";
-import { ButtonCards, ButtonPrimary, ButtonSecondary } from "../../../components/Buttons";
+import { ButtonCards, ButtonPrimary } from "../../../components/Buttons";
 import api from "../../../services/api";
 import { AuthContext } from "../../../context/Auth";
 
 /** Screen Locations */
 function MyLocals({ navigation }: any) {
+  const futebol = 1; // representando o id do esporte dentro do banco
+  const volei = 2;
   const [search, setSearch] = useState("");
   const { colors } = useTheme();
   const onChangeSearch = (query: any) => setSearch(query);
@@ -83,9 +87,31 @@ function MyLocals({ navigation }: any) {
                       <Card style={styles.cards} key={local.id}>
                         <Card.Content>
                           <Title>{local.name}</Title>
-                          <Paragraph>
+                          <Paragraph style={{
+                            alignItems: "center",
+                            flex: 1,
+                            justifyContent: "center",
+                          }}
+                          >
                             {local.sports.map((sport: any) => (
-                              sport.name
+                              (sport.id === futebol)
+                                ? (
+                                  <Paragraph key={futebol}>
+                                    <IconButton style={{ paddingTop: 10 }} key={futebol} size={20} icon="soccer" />
+                                    <Text>Futebol</Text>
+                                  </Paragraph>
+                                )
+                                : ""
+                            ))}
+                            {local.sports.map((sport: any) => (
+                              (sport.id === volei)
+                                ? (
+                                  <Paragraph key={volei}>
+                                    <IconButton style={{ paddingTop: 10 }} key={volei} size={20} icon="volleyball" />
+                                    Vôlei
+                                  </Paragraph>
+                                )
+                                : ""
                             ))}
                           </Paragraph>
                           <View>
@@ -97,9 +123,24 @@ function MyLocals({ navigation }: any) {
                             </Paragraph>
                           </View>
                         </Card.Content>
-                        <Card.Actions style={styles.cardsActions}>
-                          <ButtonCards>criar partida</ButtonCards>
-                        </Card.Actions>
+                        {
+                          (local.userIdCreated === user.id)
+                            ? (
+                              <Card.Actions style={styles.cardsActions2}>
+                                <ButtonCards
+                                  onPress={() => navigation.navigate("Editlocals", { localId: local.id })}
+                                >
+                                  editar
+                                </ButtonCards>
+                                <ButtonCards>criar partida</ButtonCards>
+                              </Card.Actions>
+                            )
+                            : (
+                              <Card.Actions style={styles.cardsActions}>
+                                <ButtonCards>criar partida</ButtonCards>
+                              </Card.Actions>
+                            )
+                        }
                       </Card>
                     )))
                   : (

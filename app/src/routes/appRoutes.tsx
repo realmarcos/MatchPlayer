@@ -1,7 +1,7 @@
 import React from "react";
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack";
 import LoggedOnRoutesTabs from "./loggedOnTabs.routes";
-import AddMatches from "../screens/Matches/addMatche";
+import AddMatch from "../screens/Matches/addMatch";
 import Profile from "../screens/Profile";
 import Friends from "../screens/Friends";
 import MyMatches from "../screens/Matches/MyMatches";
@@ -12,6 +12,7 @@ import EditProfile from "../screens/Profile/editProfile";
 import AlterPassword from "../screens/Profile/alterPass";
 import MyLocals from "../screens/Locations/myLocals";
 import EditLocals from "../screens/Locations/editLocals";
+import EditMatch from "../screens/Matches/editMatch/editMatch";
 
 const AppStack = createStackNavigator();
 
@@ -26,7 +27,7 @@ const AppRoutes: React.FC = () => (
     }}
   >
     <AppStack.Screen name="LoggedOnRoutes" component={LoggedOnRoutesTabs} />
-    <AppStack.Screen name="addMatches" component={AddMatches} />
+    <AppStack.Screen name="addMatches" component={AddMatch} />
     <AppStack.Screen name="profile" component={Profile} />
     <AppStack.Screen name="Friends" component={Friends} />
     <AppStack.Screen name="MyMatches" component={MyMatches} />
@@ -37,6 +38,7 @@ const AppRoutes: React.FC = () => (
     <AppStack.Screen name="alterPass" component={AlterPassword} />
     <AppStack.Screen name="Mylocals" component={MyLocals} />
     <AppStack.Screen name="Editlocals" component={EditLocals} />
+    <AppStack.Screen name="EditMatch" component={EditMatch} />
   </AppStack.Navigator>
 );
 
