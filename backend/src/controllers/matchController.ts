@@ -54,6 +54,7 @@ const show = async (req: Request, res: Response) => {
 
   return res.status(200).json(match);
 };
+
 const create = async (req: Request, res: Response) => {
   const {
     name,
@@ -85,8 +86,9 @@ const create = async (req: Request, res: Response) => {
   });
   match.reload();
 
-  return res.status(200).json("match");
+  return res.status(200).json(match);
 };
+
 const update = async (req: Request, res: Response) => {
   const { matchId } = req.params;
   const {

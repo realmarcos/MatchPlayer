@@ -44,6 +44,45 @@ function Home({ navigation }: any) {
     fetchMatch();
     setLoading(false);
   }, [search, navigation]);
+
+  const reloadMatch = async () => {
+    setLoading(true);
+    try {
+      const { data } = await api.get("/match", {
+        params: { search },
+      });
+      setMatchs(data.matchs);
+    } catch (err: any) {
+      showMessage({
+        message: "Erro ao buscar as Partidas!",
+        statusBarHeight: 35,
+        description: err.message,
+      });
+    }
+    setLoading(false);
+  };
+
+  const joinMatch = async (userId: any, matchId: number) => {
+    try {
+      await api.post("/guest", {
+        userId,
+        matchId,
+      });
+      reloadMatch();
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
+  const exitMatch = async (guestId: any) => {
+    try {
+      await api.delete(`/guest/${guestId}`);
+      reloadMatch();
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <Header title="MathPlayer">
@@ -86,7 +125,7 @@ function Home({ navigation }: any) {
                               source={avatar}
                             />
                             {
-                              match.guestsData.map((index:any) => (
+                              match.guestsData.map((index: any) => (
                                 <Avatar.Image
                                   key={index.id}
                                   style={{ marginLeft: 2, marginRight: 2 }}
@@ -114,12 +153,40 @@ function Home({ navigation }: any) {
                               {" "}
                             </Text>
                             <Text>{format(new Date(match.day), "dd 'de' MMMM' de 'yyyy'", { locale: ptBR })}</Text>
-                            <Text>{`${match.local.street}, n° ${match.local.number}, ${match.local.district} - ${match.local.city}`}</Text>
+                            <Text>
+                              {`${match.local.street}, n° ${match.local.number}, ${match.local.district} - ${match.local.city}`}
+                            </Text>
 
                           </View>
                         </Card.Content>
                         <Card.Actions style={styles.cardsActions}>
-                          <ButtonCards onPress={() => navigation.navigate("EditMatch", { matchId: 1 })}>participar</ButtonCards>
+                          {
+                            // eslint-disable-next-line no-nested-ternary
+                            match.userIdCreated === user.id
+                              ? (
+                                <ButtonCards onPress={() => navigation.navigate("EditMatch", { matchId: match.id })}>
+                                  editar
+                                </ButtonCards>
+                              )
+                              : match.guestsData?.findIndex((guest: any) => guest.id === user.id) !== -1
+                                ? (
+                                  <ButtonCards onPress={() => {
+                                    const guestId = match.guestsData.find(
+                                      (guest: any) => (guest.id === user.id && guest.Guest.matchId === match.id),
+                                    );
+                                    exitMatch(guestId.Guest.id);
+                                  }}
+                                  >
+                                    sair da partida
+                                  </ButtonCards>
+                                )
+                                : (
+                                  <ButtonCards onPress={() => joinMatch(user.id, match.id)}>
+                                    participar
+                                  </ButtonCards>
+                                )
+                          }
+
                         </Card.Actions>
                       </Card>
                     ))

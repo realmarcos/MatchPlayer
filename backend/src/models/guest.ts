@@ -16,8 +16,8 @@ import Partida from "./match";
 
 interface guestAttributes {
   id: number;
+  userId: number;
   matchId: number;
-  sportId: number;
 }
 interface guestCreationAttributes extends Optional<guestAttributes, "id"> { }
 
