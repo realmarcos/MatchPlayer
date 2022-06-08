@@ -4,17 +4,25 @@ import Partida from "../models/match";
 import Sport from "../models/sport";
 import Local from "../models/local";
 import User from "../models/user";
+import Guest from "../models/guest";
 
 const index = async (req: Request, res: Response) => {
   const { search, userIdCreated } = req.query;
   let whereCond;
   if (userIdCreated) {
+    const guests = await Guest.findAll({ where: { userId: +userIdCreated } });
+    const getMacthId = (guest: any) => [guest.matchId].join("");
     const newWhere = {
       [Op.or]: [
         { name: { [Op.substring]: search } },
         { note: { [Op.substring]: search } },
       ],
       userIdCreated,
+      // [Op.or]: [
+      //   guests ? { id: guests.map(getMacthId) } : undefined,
+      //   { userIdCreated },
+      // ],
+
     };
     whereCond = newWhere;
   } else {
