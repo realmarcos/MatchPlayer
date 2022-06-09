@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import {
-  Avatar, Card, Paragraph, Searchbar, useTheme, Text, ActivityIndicator, IconButton,
+  Avatar, Card, Paragraph, Searchbar, useTheme, Text, ActivityIndicator, IconButton, Button,
 } from "react-native-paper";
 import { showMessage } from "react-native-flash-message";
 import { ptBR } from "date-fns/locale";
@@ -12,6 +12,7 @@ import { styles } from "../../theme/styles";
 import ItensHeader from "../../components/ItensHeader";
 import { AuthContext } from "../../context/Auth";
 import api from "../../services/api";
+import MsgFunctionNotWork from "../../components/MsgFunctionNotWork";
 
 const avatar = require("../../assets/avatar.png");
 
@@ -137,13 +138,19 @@ function Home({ navigation }: any) {
                             }
                           </View>
                           <View>
-                            <Text>
-                              Participantes:
-                              {" "}
-                              {match.guestsData.length + 1}
-                              /
-                              {match.limitUsers}
-                            </Text>
+                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+
+                              <Text>
+                                Participantes:
+                                {" "}
+                                {match.guestsData.length + 1}
+                                /
+                                {match.limitUsers}
+                              </Text>
+                              <Button style={{ padding: 0 }} onPress={() => { MsgFunctionNotWork(); }}>
+                                convidar
+                              </Button>
+                            </View>
                             <Text>
                               {match.startHour.substring(0, 5)}
                               {" "}

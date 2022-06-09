@@ -1,17 +1,17 @@
-import { StyleSheet } from 'react-native';
-import { Button, useTheme } from 'react-native-paper';
+import { StyleSheet } from "react-native";
+import { Button, useTheme } from "react-native-paper";
 
 const styles = StyleSheet.create({
   btnPrimary: {
     width: "100%",
     marginTop: 5,
     marginBottom: 5,
-    borderRadius: 50
-  }
+    borderRadius: 50,
+  },
 });
 
-/**Button primary -  react-native-paper*/
-const ButtonPrimary = ({ ...rest }) => {
+/** Button primary -  react-native-paper */
+function ButtonPrimary({ ...rest }) {
   return (
     <Button
       {...rest}
@@ -19,13 +19,12 @@ const ButtonPrimary = ({ ...rest }) => {
       mode="contained"
       labelStyle={{ color: "#ffffff" }}
       contentStyle={{ padding: 5 }}
-    >
-    </Button>
-  )
+    />
+  );
 }
 
-/**Button secondary -  react-native-paper*/
-const ButtonSecondary = ({ ...rest }) => {
+/** Button secondary -  react-native-paper */
+function ButtonSecondary({ ...rest }) {
   const { colors } = useTheme();
   const styles = StyleSheet.create({
     btnSecondary: {
@@ -34,9 +33,9 @@ const ButtonSecondary = ({ ...rest }) => {
       marginBottom: 5,
       borderWidth: 1,
       borderColor: colors.primary,
-      borderRadius: 50
-    }
-  })
+      borderRadius: 50,
+    },
+  });
 
   return (
     <Button
@@ -44,12 +43,11 @@ const ButtonSecondary = ({ ...rest }) => {
       style={styles.btnSecondary}
       mode="outlined"
       contentStyle={{ padding: 5 }}
-    >
-    </Button>
-  )
+    />
+  );
 }
-/**Button cards -  react-native-paper*/
-const ButtonCards = ({ ...rest }) => {
+/** Button cards -  react-native-paper */
+function ButtonCards({ ...rest }) {
   const { colors } = useTheme();
   const styles = StyleSheet.create({
     btnSecondary: {
@@ -57,19 +55,17 @@ const ButtonCards = ({ ...rest }) => {
       margin: 5,
       borderWidth: 1,
       borderColor: colors.primary,
-      borderRadius: 50
-    }
-  })
+      borderRadius: 50,
+    },
+  });
 
   return (
     <Button
       {...rest}
       style={styles.btnSecondary}
       mode="outlined"
-    >
-    </Button>
-  )
+    />
+  );
 }
 
-
-export { ButtonPrimary, ButtonSecondary, ButtonCards }
+export { ButtonPrimary, ButtonSecondary, ButtonCards };

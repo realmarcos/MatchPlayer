@@ -17,39 +17,77 @@ const avatar = require("../../../assets/avatar.png");
 
 /** Screen My Matches */
 function MyMatches({ navigation }: any) {
-  const [searchQuery, setSearchQuery] = useState("");
   const { colors } = useTheme();
-  const onChangeSearch = (query: any) => setSearchQuery(query);
   const [search, setSearch] = useState("");
+  const onChangeSearch = (query: any) => setSearch(query);
   const [loading, setLoading] = useState(false);
   const [matchs, setMatchs] = useState([]);
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      setLoading(true);
-      const fetchMatchs = async () => {
-        try {
-          const { data } = await api.get("/match", {
-            params: {
-              search,
-              userIdCreated: user.id,
-            },
-          });
-          setMatchs(data.matchs);
-        } catch (err: any) {
-          showMessage({
-            message: "Erro ao buscar suas partidas!",
-            statusBarHeight: 35,
-            description: err.message,
-          });
-        }
-      };
-      fetchMatchs();
-      setLoading(false);
-    });
-    return unsubscribe;
+    // const unsubscribe = navigation.addListener("focus", () => {
+    setLoading(true);
+    const fetchMatchs = async () => {
+      try {
+        const { data } = await api.get("/match", {
+          params: {
+            search,
+            userIdCreated: user.id,
+          },
+        });
+        setMatchs(data.matchs);
+        console.log(data);
+      } catch (err: any) {
+        showMessage({
+          message: "Erro ao buscar suas partidas!",
+          statusBarHeight: 35,
+          description: err.message,
+        });
+      }
+    };
+    fetchMatchs();
+    setLoading(false);
+    // });
+    // return unsubscribe;
   }, [search, navigation]);
+
+  const reloadMatch = async () => {
+    setLoading(true);
+    try {
+      const { data } = await api.get("/match", {
+        params: { search },
+      });
+      setMatchs(data.matchs);
+    } catch (err: any) {
+      showMessage({
+        message: "Erro ao buscar as Partidas!",
+        statusBarHeight: 35,
+        description: err.message,
+      });
+    }
+    setLoading(false);
+  };
+
+  const joinMatch = async (userId: any, matchId: number) => {
+    try {
+      await api.post("/guest", {
+        userId,
+        matchId,
+      });
+      reloadMatch();
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
+  const exitMatch = async (guestId: any) => {
+    try {
+      await api.delete(`/guest/${guestId}`);
+      reloadMatch();
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -70,7 +108,7 @@ function MyMatches({ navigation }: any) {
               autoComplete="off"
               placeholder="Pesquisar"
               onChangeText={onChangeSearch}
-              value={searchQuery}
+              value={search}
               theme={{ colors: { text: colors.placeholder } }}
               style={styles.search}
             />
@@ -134,9 +172,32 @@ function MyMatches({ navigation }: any) {
                           </View>
                         </Card.Content>
                         <Card.Actions style={styles.cardsActions}>
-                          <ButtonCards onPress={() => navigation.navigate("EditMatch", { matchId: match.id })}>
-                            editar
-                          </ButtonCards>
+                          {
+                            // eslint-disable-next-line no-nested-ternary
+                            match.userIdCreated === user.id
+                              ? (
+                                <ButtonCards onPress={() => navigation.navigate("EditMatch", { matchId: match.id })}>
+                                  editar
+                                </ButtonCards>
+                              )
+                              : match.guestsData?.findIndex((guest: any) => guest.id === user.id) !== -1
+                                ? (
+                                  <ButtonCards onPress={() => {
+                                    const guestId = match.guestsData.find(
+                                      (guest: any) => (guest.id === user.id && guest.Guest.matchId === match.id),
+                                    );
+                                    exitMatch(guestId.Guest.id);
+                                  }}
+                                  >
+                                    sair da partida
+                                  </ButtonCards>
+                                )
+                                : (
+                                  <ButtonCards onPress={() => joinMatch(user.id, match.id)}>
+                                    participar
+                                  </ButtonCards>
+                                )
+                          }
                         </Card.Actions>
                       </Card>
                     ))

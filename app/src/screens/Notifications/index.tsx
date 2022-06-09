@@ -5,6 +5,7 @@ import {
 } from "react-native-paper";
 import { ButtonCards, ButtonPrimary } from "../../components/Buttons";
 import Header from "../../components/Header";
+import MsgFunctionNotWork from "../../components/MsgFunctionNotWork";
 import { styles } from "../../theme/styles";
 
 /** Screen Notifications */
@@ -23,7 +24,7 @@ function Notifications({ navigation }: any) {
       </Header>
       <ScrollView>
         <View style={styles.container}>
-          <ButtonPrimary onPress={() => console.log("marcar como lido")}>marcar todas como lida</ButtonPrimary>
+          <ButtonPrimary onPress={() => { MsgFunctionNotWork(); }}>marcar todas como lida</ButtonPrimary>
           <Card style={styles.cards}>
             <Card.Content>
               <Text>
@@ -33,8 +34,8 @@ function Notifications({ navigation }: any) {
               </Text>
             </Card.Content>
             <Card.Actions style={styles.cardsActions2}>
-              <ButtonCards>aceitar</ButtonCards>
-              <ButtonCards>recusar</ButtonCards>
+              <ButtonCards onPress={() => { MsgFunctionNotWork(); }}>aceitar</ButtonCards>
+              <ButtonCards onPress={() => { MsgFunctionNotWork(); }}>recusar</ButtonCards>
             </Card.Actions>
           </Card>
           <Card style={styles.cards}>
@@ -44,8 +45,8 @@ function Notifications({ navigation }: any) {
               </Text>
             </Card.Content>
             <Card.Actions style={styles.cardsActions2}>
-              <ButtonCards>aceitar</ButtonCards>
-              <ButtonCards>recusar</ButtonCards>
+              <ButtonCards onPress={() => { MsgFunctionNotWork(); }}>aceitar</ButtonCards>
+              <ButtonCards onPress={() => { MsgFunctionNotWork(); }}>recusar</ButtonCards>
             </Card.Actions>
           </Card>
           <Card style={styles.cards}>
