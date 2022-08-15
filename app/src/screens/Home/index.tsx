@@ -147,9 +147,12 @@ function Home({ navigation }: any) {
                                 /
                                 {match.limitUsers}
                               </Text>
-                              <Button style={{ padding: 0 }} onPress={() => { MsgFunctionNotWork(); }}>
-                                convidar
-                              </Button>
+                              {user.id === match.userIdCreated
+                              && (
+                                <Button style={{ padding: 0 }} onPress={() => { MsgFunctionNotWork(); }}>
+                                  convidar
+                                </Button>
+                              )}
                             </View>
                             <Text>
                               {match.startHour.substring(0, 5)}
